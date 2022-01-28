@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.activitytimer.taskExecution.TaskExecutionViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/task_txv_name"
+            android:layout_width="153dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="56dp"
+            android:text="@string/task" />
+
+        <TextView
+            android:id="@+id/task_txv_time"
+            android:layout_width="151dp"
+            android:layout_height="85dp"
+            tools:text="10:00" />
+
+        <TextView
+            android:id="@+id/task_txv_sets_number"
+            android:layout_width="151dp"
+            android:layout_height="85dp"
+            tools:text="2/3" />
+
+        <Button
+            android:id="@+id/task_btn_start"
+            android:layout_width="168dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="124dp"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/task_btn_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skip" />
+
+        <Button
+            android:id="@+id/task_btn_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause" />
+
+    </LinearLayout>
+</layout>

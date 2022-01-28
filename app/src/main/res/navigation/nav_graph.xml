@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/TaskListFragment">
+
+    <fragment
+        android:id="@+id/TaskListFragment"
+        android:name="com.example.activitytimer.taskList.TaskListFragment"
+        android:label="TaskList1"
+        tools:layout="@layout/fragment_task_list">
+
+        <action
+            android:id="@+id/action_TaskList_to_SubtaskList"
+            app:destination="@id/SubtaskListFragment" />
+        <action
+            android:id="@+id/action_TaskList_to_CreateTask"
+            app:destination="@id/CreateTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SubtaskListFragment"
+        android:name="com.example.activitytimer.taskList.SubtaskListFragment"
+        android:label="">
+
+        <action
+            android:id="@+id/action_SubtaskList_to_TaskExecution"
+            app:destination="@id/TaskExecutionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TaskExecutionFragment"
+        android:name="com.example.activitytimer.taskExecution.TaskExecutionFragment"
+        android:label="">
+
+        <action
+            android:id="@+id/action_TaskExecution_to_TaskFinished"
+            app:destination="@id/SubtaskListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CreateTaskFragment"
+        android:name="com.example.activitytimer.createTask.CreateTaskFragment"
+        android:label="CreateTask">
+
+        <action
+            android:id="@+id/action_CreateTask_to_CreateSubtask"
+            app:destination="@id/CreateSubtaskFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/CreateSubtaskFragment"
+        android:name="com.example.activitytimer.createTask.CreateSubtaskFragment"
+        android:label="CreateTask"
+        />
+    <fragment
+        android:id="@+id/TaskFinishedFragment"
+        android:name="com.example.activitytimer.TaskFinishedFragment"
+        android:label="">
+    </fragment>
+</navigation>
