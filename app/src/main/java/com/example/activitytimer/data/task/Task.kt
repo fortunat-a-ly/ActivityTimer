@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.activitytimer.taskList.ITask
 
 @Entity(tableName = "task_table")
 data class Task (
@@ -13,10 +14,10 @@ data class Task (
 
     @ColumnInfo(name = "time")
     var time: Long = 0
-) : Parcelable {
+) : Parcelable, ITask {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
+    override var id: Long = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

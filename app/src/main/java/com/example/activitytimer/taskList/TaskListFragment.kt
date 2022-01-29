@@ -38,7 +38,7 @@ class TaskListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.task_list)
-        val adapter = TaskListAdapter (TaskListener { task ->  listItemOnClick(task)})
+        val adapter = TaskListAdapter (TaskListener { task ->  listItemOnClick(task)}, R.layout.list_item_task)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
