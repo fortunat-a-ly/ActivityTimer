@@ -1,7 +1,9 @@
 package com.example.activitytimer.createTask
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.example.activitytimer.data.subtask.Subtask
@@ -13,14 +15,23 @@ class CreateTaskViewModel(
     private val database: TaskDatabaseDao,
     val state: SavedStateHandle,
     application: Application // ? error if add "val"
-    ) : AndroidViewModel(application) {
+    )  : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
     val task: Task = Task()
     //val subtask: Subtask? = Subtask(0, 0, "", 0, 0)
-    val subtasks: MutableLiveData<Subtask> = MutableLiveData()
+
+    private val _subtasks: MutableLiveData<List<Subtask>> = MutableLiveData()
+    val subtasks: LiveData<List<Subtask>> = _subtasks
+
+    val liveState = MutableLiveData<SavedStateHandle>(state)
+
+    init {
+       if(!state.contains("h"))
+           Log.d("STATE1", "yes")
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -34,13 +45,9 @@ class CreateTaskViewModel(
 
     fun clearDatabase(){
         uiScope.launch {
-            clear()
-        }
-    }
-
-    suspend fun clear(){
-        withContext(Dispatchers.IO){
-            database.clear()
+            withContext(Dispatchers.IO){
+                database.clear()
+            }
         }
     }
 
