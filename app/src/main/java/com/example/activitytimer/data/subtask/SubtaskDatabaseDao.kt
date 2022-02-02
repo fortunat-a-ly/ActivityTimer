@@ -11,6 +11,12 @@ interface SubtaskDatabaseDao {
     @Insert
     fun insert(subtask: Subtask)
 
+    @Insert
+    fun insert(subtask: List<Subtask>)
+
+    @Query("SELECT * from subtask_table")
+    fun getAll(): List<Subtask>?
+
     @Query("SELECT * from subtask_table WHERE id = :key")
     fun get(key: Long): Subtask?
 

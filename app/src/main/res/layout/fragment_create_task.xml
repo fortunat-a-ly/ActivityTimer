@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.activitytimer.createTask.CreateTaskViewModel" />
+            type="com.example.activitytimer.createTask.viewModels.CreateTaskViewModel" />
     </data>
 
     <LinearLayout
