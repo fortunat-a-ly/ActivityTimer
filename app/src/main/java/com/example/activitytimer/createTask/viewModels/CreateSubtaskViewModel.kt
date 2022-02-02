@@ -1,4 +1,4 @@
-package com.example.activitytimer.createTask
+package com.example.activitytimer.createTask.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ class CreateSubtaskViewModel(private val state: SavedStateHandle) : ViewModel() 
     val subtaskSaved: LiveData<Boolean> = _subtaskSaved
 
     fun addSubtask() {
-        state.set("subtask", subtask)
+        CommonClass.subtasks.add(subtask)
         _subtaskSaved.value = true
     }
 }
