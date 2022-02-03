@@ -63,7 +63,7 @@ class CreateTaskFragment : Fragment() {
         binding.creationRcvSubtaskList.adapter = adapter
         binding.creationRcvSubtaskList.layoutManager = LinearLayoutManager(context)
 
-        adapter.submitList(viewModel.subtasks.value as List<ITask>?)
+        adapter.submitList(viewModel.subtasks as List<ITask>?)
     }
 
     override fun onPause() {
