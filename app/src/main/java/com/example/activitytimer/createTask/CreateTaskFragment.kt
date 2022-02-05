@@ -11,13 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
 import com.example.activitytimer.createTask.viewModels.CreateTaskViewModel
-import com.example.activitytimer.data.subtask.SubtaskDatabase
+import com.example.activitytimer.createTask.viewModels.CreateTaskViewModelFactory
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
-import com.example.activitytimer.data.task.TaskDatabase
+import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentCreateTaskBinding
-import com.example.activitytimer.taskList.ITask
-import com.example.activitytimer.taskList.TaskListAdapter
-import com.example.activitytimer.taskList.TaskListener
+import com.example.activitytimer.data.ITask
+import com.example.activitytimer.listScreens.TaskListAdapter
+import com.example.activitytimer.listScreens.TaskListener
 import kotlinx.coroutines.*
 
 class CreateTaskFragment : Fragment() {
@@ -35,7 +35,7 @@ class CreateTaskFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         // Create an instance of the ViewModel Factory.
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-        subtaskSource = SubtaskDatabase.getInstance(application).subtaskDatabaseDao
+        subtaskSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
         val viewModelFactory = CreateTaskViewModelFactory(dataSource, subtaskSource,this, application)
 
         // Get a reference to the ViewModel associated with this fragment.

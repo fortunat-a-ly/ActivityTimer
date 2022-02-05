@@ -1,4 +1,4 @@
-package com.example.activitytimer.taskList
+package com.example.activitytimer.listScreens
 
 import com.example.activitytimer.data.task.Task
 

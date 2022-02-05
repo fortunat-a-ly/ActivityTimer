@@ -1,4 +1,4 @@
-package com.example.activitytimer.taskList
+package com.example.activitytimer.listScreens
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

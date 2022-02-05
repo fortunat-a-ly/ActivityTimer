@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.activitytimer.data.task.TaskDatabase
+import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentTaskExecutionBinding
 
 class TaskExecutionFragment : Fragment() {
@@ -23,7 +23,7 @@ class TaskExecutionFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         // Create an instance of the ViewModel Factory.
-        val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
+        val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
 
         viewModelFactory = TaskExecutionViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskExecutionViewModel::class.java)

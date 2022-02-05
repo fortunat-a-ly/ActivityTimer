@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/TaskListFragment"
-        android:name="com.example.activitytimer.taskList.TaskListFragment"
+        android:name="com.example.activitytimer.listScreens.TaskListFragment"
         android:label="TaskList1"
         tools:layout="@layout/fragment_task_list">
 
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/SubtaskListFragment"
-        android:name="com.example.activitytimer.taskList.SubtaskListFragment"
+        android:name="com.example.activitytimer.listScreens.SubtaskListFragment"
         android:label="">
 
         <action
