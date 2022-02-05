@@ -5,7 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.activitytimer.taskList.ITask
+import com.example.activitytimer.data.ITask
 
 @Entity(tableName = "subtask_table")
 data class Subtask (
@@ -16,7 +16,7 @@ data class Subtask (
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 0,
+    var time: Long = 10000L,
 
     @ColumnInfo(name = "sets_count")
     var count: Int = 0

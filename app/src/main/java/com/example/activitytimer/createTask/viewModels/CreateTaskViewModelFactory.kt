@@ -1,11 +1,10 @@
-package com.example.activitytimer.createTask
+package com.example.activitytimer.createTask.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.activitytimer.createTask.viewModels.CreateTaskViewModel
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.TaskDatabaseDao
 

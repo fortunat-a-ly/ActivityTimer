@@ -5,7 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.activitytimer.taskList.ITask
+import com.example.activitytimer.data.ITask
 
 @Entity(tableName = "task_table")
 data class Task (
