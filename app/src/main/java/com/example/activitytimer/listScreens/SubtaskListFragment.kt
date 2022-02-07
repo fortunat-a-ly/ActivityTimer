@@ -1,12 +1,16 @@
 package com.example.activitytimer.listScreens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
@@ -14,6 +18,7 @@ import com.example.activitytimer.data.DatabaseDao
 import com.example.activitytimer.data.ITask
 import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentTaskListBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SubtaskListFragment : Fragment() {
     private lateinit var binding: FragmentTaskListBinding
@@ -30,28 +35,38 @@ class SubtaskListFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
 
-        val taskId: Long = 1L
+        val taskId: Long = requireArguments().getLong("taskId")
 
         val viewModelFactory = SubtaskListViewModelFactory(dataSource, taskId, application)
-        val viewModel = ViewModelProvider(this, viewModelFactory)
+        viewModel = ViewModelProvider(this, viewModelFactory)
             .get(TaskListViewModel::class.java)
 
-        binding.fab
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recyclerView: RecyclerView = binding.taskList
-        val adapter = TaskListAdapter (TaskListener { }, R.layout.list_item_subtask)
+        val adapter = TaskListAdapter (TaskListener { taskId -> listItemOnClick(taskId) }, R.layout.list_item_subtask)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.tasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
-/*        val executeTaskButton = view.findViewById<FloatingActionButton>(R.id.fab)
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            // Log.d("Subtasks", viewModel.tasks.value.toString())
+            // Log.d("Subtasks", viewModel.tasks.value?.size.toString())
+        }
+
+
+        val executeTaskButton = view.findViewById<FloatingActionButton>(R.id.fab)
         executeTaskButton.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_SubtaskList_to_TaskExecution)
         )
-        super.onViewCreated(view, savedInstanceState)*/
+        super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun listItemOnClick(taskId: Long) {
+        val bundle = bundleOf("taskId" to taskId)
+
+        // findNavController().navigate(R.id., bundle)
+    }
 }

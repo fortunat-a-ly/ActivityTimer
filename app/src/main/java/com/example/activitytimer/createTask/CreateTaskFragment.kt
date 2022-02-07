@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -78,5 +79,11 @@ class CreateTaskFragment : Fragment() {
         }
 
 
+    }
+
+    private fun listItemOnClick(taskId: Long) {
+        val bundle = bundleOf("taskId" to taskId)
+
+        findNavController().navigate(R.id.action_CreateTask_to_CreateSubtask, bundle)
     }
 }

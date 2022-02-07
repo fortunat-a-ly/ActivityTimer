@@ -33,8 +33,10 @@
         android:label="">
 
         <action
-            android:id="@+id/action_TaskExecution_to_TaskFinished"
-            app:destination="@id/SubtaskListFragment" />
+            android:id="@+id/action_TaskExecution_to_TaskDone"
+            app:destination="@id/TaskDoneFragment"
+            app:popUpTo="@id/TaskListFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/CreateTaskFragment"
@@ -51,8 +53,8 @@
         android:label="CreateTask"
         />
     <fragment
-        android:id="@+id/TaskFinishedFragment"
-        android:name="com.example.activitytimer.TaskFinishedFragment"
+        android:id="@+id/TaskDoneFragment"
+        android:name="com.example.activitytimer.taskDone.TaskDoneFragment"
         android:label="">
     </fragment>
 </navigation>

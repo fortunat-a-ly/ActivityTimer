@@ -19,4 +19,5 @@
     <string name="duration">Duration</string>
     <string name="number_of_times">Number of times</string>
     <string name="create_task">Create Task</string>
+    <string name="well_done">Well Done!</string>
 </resources>

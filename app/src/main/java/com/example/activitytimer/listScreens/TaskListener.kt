@@ -1,7 +1,8 @@
 package com.example.activitytimer.listScreens
 
+import com.example.activitytimer.data.ITask
 import com.example.activitytimer.data.task.Task
 
-class TaskListener (val clickListener: (task: Task) -> Unit) {
-    fun onClick(task: Task) = clickListener(task)
+class TaskListener (val clickListener: (taskId: Long) -> Unit) {
+    fun onClick(task: ITask) = clickListener(task.id)
 }

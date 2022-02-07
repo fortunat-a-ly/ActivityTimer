@@ -41,7 +41,7 @@ class TaskListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.task_list)
-        val adapter = TaskListAdapter (TaskListener { task ->  listItemOnClick(task)}, R.layout.list_item_task)
+        val adapter = TaskListAdapter (TaskListener { taskId ->  listItemOnClick(taskId)}, R.layout.list_item_task)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -52,8 +52,8 @@ class TaskListFragment : Fragment() {
         )
     }
 
-    private fun listItemOnClick(task: Task) {
-        val bundle = bundleOf("currentTask" to task)
+    private fun listItemOnClick(taskId: Long) {
+        val bundle = bundleOf("taskId" to taskId)
 
         findNavController().navigate(R.id.action_TaskList_to_SubtaskList, bundle)
     }

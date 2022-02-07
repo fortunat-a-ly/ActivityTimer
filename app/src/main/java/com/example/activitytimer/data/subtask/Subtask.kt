@@ -16,7 +16,7 @@ data class Subtask (
     override var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 0,
+    var time: Long = 10000L,
 
     @ColumnInfo(name = "sets_count")
     var count: Int = 0

@@ -3,12 +3,19 @@
 
     <data>
         <variable
-            name="subtask"
+            name="task"
             type="com.example.activitytimer.data.subtask.Subtask" />
     </data>
 
-    <TextView
+    <LinearLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@{subtask.name}"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{task.name}"
+            android:background="@color/purple_200"/>
+    </LinearLayout>
 </layout>
