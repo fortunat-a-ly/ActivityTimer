@@ -4,19 +4,20 @@ buildscript {
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.0.4"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
     ext {
-        version_navigation = '1.0.0'
+        version_navigation = '2.4.0'
         version_room = "2.3.0"
         version_coroutine = "1.3.7"
         version_lifecycle_extensions = "2.2.0"
         version_lifecycle = "2.2.0"
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 

@@ -28,18 +28,24 @@ class SubtaskListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTaskListBinding.inflate(inflater)
         binding.fab.background = (ResourcesCompat.getDrawable(resources, R.drawable.ic_execute_task, null))
 
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
 
-        val taskId: Long = requireArguments().getLong("taskId")
+        val taskId: Long = SubtaskListFragmentArgs.fromBundle(requireArguments()).taskId
 
         val viewModelFactory = SubtaskListViewModelFactory(dataSource, taskId, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(TaskListViewModel::class.java)
+
+        binding.fab.setOnClickListener(
+            Navigation.createNavigateOnClickListener(
+                SubtaskListFragmentDirections.actionSubtaskListToTaskExecution(taskId)
+            )
+        )
 
         return binding.root
     }
@@ -56,11 +62,6 @@ class SubtaskListFragment : Fragment() {
             // Log.d("Subtasks", viewModel.tasks.value?.size.toString())
         }
 
-
-        val executeTaskButton = view.findViewById<FloatingActionButton>(R.id.fab)
-        executeTaskButton.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_SubtaskList_to_TaskExecution)
-        )
         super.onViewCreated(view, savedInstanceState)
     }
 
