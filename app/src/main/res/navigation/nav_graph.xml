@@ -13,7 +13,8 @@
 
         <action
             android:id="@+id/action_TaskList_to_SubtaskList"
-            app:destination="@id/SubtaskListFragment" />
+            app:destination="@id/SubtaskListFragment" >
+        </action>
         <action
             android:id="@+id/action_TaskList_to_CreateTask"
             app:destination="@id/CreateTaskFragment" />
@@ -23,6 +24,10 @@
         android:name="com.example.activitytimer.listScreens.SubtaskListFragment"
         android:label="">
 
+        <argument
+            android:name="taskId"
+            app:argType="long"/>
+
         <action
             android:id="@+id/action_SubtaskList_to_TaskExecution"
             app:destination="@id/TaskExecutionFragment" />
@@ -31,6 +36,10 @@
         android:id="@+id/TaskExecutionFragment"
         android:name="com.example.activitytimer.taskExecution.TaskExecutionFragment"
         android:label="">
+
+        <argument
+            android:name="taskId"
+            app:argType="long"/>
 
         <action
             android:id="@+id/action_TaskExecution_to_TaskDone"
@@ -45,7 +54,7 @@
 
         <action
             android:id="@+id/action_CreateTask_to_CreateSubtask"
-            app:destination="@id/CreateSubtaskFragment"/>
+            app:destination="@id/CreateSubtaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/CreateSubtaskFragment"

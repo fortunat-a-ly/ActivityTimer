@@ -53,8 +53,6 @@ class TaskListFragment : Fragment() {
     }
 
     private fun listItemOnClick(taskId: Long) {
-        val bundle = bundleOf("taskId" to taskId)
-
-        findNavController().navigate(R.id.action_TaskList_to_SubtaskList, bundle)
+        findNavController().navigate(TaskListFragmentDirections.actionTaskListToSubtaskList(taskId))
     }
 }
