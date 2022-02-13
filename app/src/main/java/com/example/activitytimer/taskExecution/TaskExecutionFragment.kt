@@ -27,7 +27,7 @@ class TaskExecutionFragment : Fragment() {
         // Create an instance of the ViewModel Factory.
         val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
 
-        val taskId = TaskExecutionFragmentArgs.fromBundle(arguments).taskId
+        val taskId = TaskExecutionFragmentArgs.fromBundle(requireArguments()).taskId
 
         viewModelFactory = TaskExecutionViewModelFactory(dataSource, taskId, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskExecutionViewModel::class.java)

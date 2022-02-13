@@ -51,7 +51,9 @@ class CreateTaskFragment : Fragment() {
         }
 
         viewModel.subtaskSaved.observe(viewLifecycleOwner, { subtaskSaved ->
-            if(subtaskSaved) findNavController().popBackStack()
+            if(subtaskSaved) {
+                findNavController().popBackStack()
+            }
         })
 
         return binding.root
