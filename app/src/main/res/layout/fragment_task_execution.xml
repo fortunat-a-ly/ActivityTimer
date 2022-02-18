@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.example.activitytimer.utils.DurationString"/>
         <variable
             name="viewModel"
             type="com.example.activitytimer.taskExecution.TaskExecutionViewModel" />
@@ -19,15 +20,14 @@
             android:id="@+id/task_txv_name"
             android:layout_width="153dp"
             android:layout_height="70dp"
-            android:layout_marginBottom="56dp"
-            android:text="@{viewModel.currentSubtask.name}" />
+            android:layout_marginBottom="56dp" />
 
         <TextView
             android:id="@+id/task_txv_time"
             android:layout_width="151dp"
             android:layout_height="85dp"
-            android:text="@{String.valueOf(viewModel.currentSubtask.time)}"
-            tools:text="10:00" />
+            android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"
+            tools:text="String.valueOf(viewModel.duration)" />
 
         <TextView
             android:id="@+id/task_txv_sets_number"
@@ -40,7 +40,7 @@
             android:layout_width="168dp"
             android:layout_height="96dp"
             android:layout_marginTop="124dp"
-            android:onClick="@{() -> viewModel.startTimer()}"
+            android:onClick="@{() -> viewModel.onStart()}"
             android:text="@string/start" />
 
         <Button

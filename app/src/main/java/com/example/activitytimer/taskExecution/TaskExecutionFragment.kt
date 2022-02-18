@@ -24,7 +24,6 @@ class TaskExecutionFragment : Fragment() {
         binding = FragmentTaskExecutionBinding.inflate(inflater, container, false)
 
         val application = requireNotNull(this.activity).application
-        // Create an instance of the ViewModel Factory.
         val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
 
         val taskId = TaskExecutionFragmentArgs.fromBundle(requireArguments()).taskId
@@ -32,15 +31,20 @@ class TaskExecutionFragment : Fragment() {
         viewModelFactory = TaskExecutionViewModelFactory(dataSource, taskId, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskExecutionViewModel::class.java)
 
-        viewModel.subtasks.observe(viewLifecycleOwner) {
-            binding.taskTxvSetsNumber.text = it?.size.toString()
-        }
-
         viewModel.allTasksDone.observe(viewLifecycleOwner) {
             if(it) findNavController().navigate(R.id.action_TaskExecution_to_TaskDone)
         }
 
+        viewModel.taskChanged.observe(viewLifecycleOwner) {
+            viewModel.currentSubtask?.let{
+                binding.taskTxvName.text = it.name
+                binding.taskTxvSetsNumber.text = it.count.toString()
+            }
+        }
+
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 }

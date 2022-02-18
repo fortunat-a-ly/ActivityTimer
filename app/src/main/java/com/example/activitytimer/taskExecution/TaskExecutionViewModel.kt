@@ -1,13 +1,12 @@
 package com.example.activitytimer.taskExecution
 
 import android.app.Application
-import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
+import com.example.activitytimer.utils.CountDownSecondsTimer
 import kotlinx.coroutines.*
 
 class TaskExecutionViewModel(
@@ -19,73 +18,81 @@ class TaskExecutionViewModel(
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    val subtasks: LiveData<List<Subtask>> = database.getAllTasks(taskId)
-    var subtaskIndex = 0
-    private val _currentSubtask: MutableLiveData<Subtask> =
-        MutableLiveData(
-            if (subtasks.value?.isNotEmpty() == true)
-                subtasks.value!![subtaskIndex]
-            else Subtask(name = "aha", time = 20000L)
-        )
-    val currentSubtask: LiveData<Subtask> = _currentSubtask
+    private var subtasks: List<Subtask> = listOf()
+    private var subtaskIndex = 0
+    val currentSubtask: Subtask?
+        get() = subtasks.getOrNull(subtaskIndex)
 
-    private val _allTasksDone: MutableLiveData<Boolean> = MutableLiveData(false) // SingleLiveEvent or better - Event wrapper
+    private val _allTasksDone: MutableLiveData<Boolean> = MutableLiveData(false)
     val allTasksDone: LiveData<Boolean> = _allTasksDone
 
-    private var timer: CountDownTimer? = null
+    private val _taskChanged: MutableLiveData<Boolean> = MutableLiveData(false)
+    val taskChanged: LiveData<Boolean> = _taskChanged
 
-    private fun getCurrentTask() {
-        uiScope.launch {
-            withContext(Dispatchers.IO){
-            }
+    private var timer: CountDownSecondsTimer? = null
+
+    private val _durationInSeconds: MutableLiveData<Long> by lazy { MutableLiveData(currentSubtask?.time) }
+    val durationInSeconds: LiveData<Long> get() = _durationInSeconds
+
+    init {
+        loadSubtasks()
+    }
+
+    private fun loadSubtasks(){
+        uiScope.launch(Dispatchers.IO) {
+            subtasks = database.getAllSubtasks(taskId)
         }
     }
 
-    fun startTimer() {
-        if (subtasks.value?.isNotEmpty() == true) {
-             timer = object : CountDownTimer(subtasks.value!![subtaskIndex].time, 1000) {
-
-                override fun onTick(millisUntilFinished: Long) {
-                    updateCurrentTaskTime(millisUntilFinished / 1000)
-                    Log.d("Life", millisUntilFinished.toString())
-                    Log.d("Life", subtaskIndex.toString())
-                }
-
-                override fun onFinish() {
-                    nextTask()
-                }
-            }.start()
-        }
+    private fun startTimer() {
+        timer = CountDownSecondsTimer(
+            durationInSeconds.value ?: 0,
+            ::updateCurrentTaskTime,
+            ::changeSubtask)
+        timer?.start()
     }
 
-    fun updateCurrentTaskTime(newTime: Long){
-        subtasks.value!![subtaskIndex].time = newTime
+    private fun updateCurrentTaskTime(newTime: Long) {
+        _durationInSeconds.value = newTime
     }
 
-    fun onSkip() {
-        timer?.cancel()
-        nextTask()
-    }
-
-    fun onPause(){
-        timer?.cancel()
-    }
-
-    private fun anyTasksLeft() : Boolean = subtaskIndex < subtasks.value?.lastIndex ?: 0
+    private fun anyTasksLeft() : Boolean = subtaskIndex < subtasks.lastIndex
 
     private fun taskCompleted() {
+        // SingleLiveEvent or better - Event wrapper
         _allTasksDone.value = true
         _allTasksDone.value = false
     }
 
-    fun nextTask() {
+    private fun subtaskChanged() {
+        _taskChanged.value = true
+        _taskChanged.value = false
+    }
+
+    private fun nextTask() {
+        subtaskIndex += 1
+    }
+
+    private fun changeSubtask() {
         if(anyTasksLeft()) {
-            subtaskIndex += 1
-            _currentSubtask.value = subtasks.value?.get(subtaskIndex)
-            Log.d("Life2", subtaskIndex.toString())
-            Log.d("Life2", _currentSubtask.value.toString())
+            nextTask()
+            updateCurrentTaskTime(currentSubtask?.time ?: 0)
+            subtaskChanged()
         }
         else taskCompleted()
+    }
+
+    fun onStart() {
+        startTimer()
+    }
+
+    fun onSkip() {
+        timer?.cancel()
+        changeSubtask()
+    }
+
+    fun onPause(){
+        timer?.cancel()
     }
 
     override fun onCleared() {
