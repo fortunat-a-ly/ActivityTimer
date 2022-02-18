@@ -38,7 +38,7 @@ class TaskExecutionFragment : Fragment() {
         viewModel.taskChanged.observe(viewLifecycleOwner) {
             viewModel.currentSubtask?.let{
                 binding.taskTxvName.text = it.name
-                binding.taskTxvSetsNumber.text = it.count.toString()
+                binding.taskTxvSetsNumber.text = resources.getString(R.string.reps_count_of_all, viewModel.subtaskRepCount, it.count)
             }
         }
 

@@ -1,6 +1,7 @@
 package com.example.activitytimer.taskExecution
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +24,9 @@ class TaskExecutionViewModel(
     val currentSubtask: Subtask?
         get() = subtasks.getOrNull(subtaskIndex)
 
+    private var _subtaskRepCount: Int = 0
+    val subtaskRepCount: Int get() = _subtaskRepCount
+
     private val _allTasksDone: MutableLiveData<Boolean> = MutableLiveData(false)
     val allTasksDone: LiveData<Boolean> = _allTasksDone
 
@@ -32,7 +36,7 @@ class TaskExecutionViewModel(
     private var timer: CountDownSecondsTimer? = null
 
     private val _durationInSeconds: MutableLiveData<Long> by lazy { MutableLiveData(currentSubtask?.time) }
-    val durationInSeconds: LiveData<Long> get() = _durationInSeconds
+    val durationInSeconds: LiveData<Long> = _durationInSeconds
 
     init {
         loadSubtasks()
@@ -45,10 +49,11 @@ class TaskExecutionViewModel(
     }
 
     private fun startTimer() {
+        updateCurrentTaskTime(currentSubtask?.time ?: 0)
         timer = CountDownSecondsTimer(
             durationInSeconds.value ?: 0,
             ::updateCurrentTaskTime,
-            ::changeSubtask)
+            ::subtaskRepFinished)
         timer?.start()
     }
 
@@ -58,28 +63,51 @@ class TaskExecutionViewModel(
 
     private fun anyTasksLeft() : Boolean = subtaskIndex < subtasks.lastIndex
 
+    private fun allSubtaskRepsDone(): Boolean = currentSubtask?.count == subtaskRepCount
+
     private fun taskCompleted() {
         // SingleLiveEvent or better - Event wrapper
         _allTasksDone.value = true
         _allTasksDone.value = false
     }
 
-    private fun subtaskChanged() {
+    private fun taskChanged() {
         _taskChanged.value = true
         _taskChanged.value = false
     }
 
-    private fun nextTask() {
+    private fun resetRepCount() {
+        _subtaskRepCount = 0
+    }
+
+    private fun nextSubtask() {
         subtaskIndex += 1
     }
 
-    private fun changeSubtask() {
+    private fun newSubtask() {
         if(anyTasksLeft()) {
-            nextTask()
-            updateCurrentTaskTime(currentSubtask?.time ?: 0)
-            subtaskChanged()
+            nextSubtask()
+            resetRepCount()
+            setSubtaskRepToInitialState()
         }
         else taskCompleted()
+    }
+
+    private fun setSubtaskRepToInitialState() {
+        updateCurrentTaskTime(currentSubtask?.time ?: 0)
+        taskChanged()
+    }
+
+    private fun subtaskRepDone() {
+        _subtaskRepCount += 1
+    }
+
+    private fun subtaskRepFinished() {
+        subtaskRepDone()
+        if(allSubtaskRepsDone())
+            newSubtask()
+        else
+            setSubtaskRepToInitialState()
     }
 
     fun onStart() {
@@ -88,7 +116,7 @@ class TaskExecutionViewModel(
 
     fun onSkip() {
         timer?.cancel()
-        changeSubtask()
+        newSubtask()
     }
 
     fun onPause(){
