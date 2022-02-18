@@ -27,6 +27,9 @@ interface SubtaskDatabaseDao : DatabaseDao<Subtask> {
     @Query("SELECT * FROM subtask_table WHERE task_id = :taskKey ORDER BY id ASC")
     override fun getAllTasks(taskKey: Long): LiveData<List<Subtask>>
 
+    @Query("SELECT * FROM subtask_table WHERE task_id = :taskKey ORDER BY id ASC")
+    fun getAllSubtasks(taskKey: Long): List<Subtask>
+
     @Query("DELETE FROM subtask_table")
     fun clear()
 }

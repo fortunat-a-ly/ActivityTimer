@@ -16,10 +16,10 @@ data class Subtask (
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 10000L,
+    var time: Long = 0L,
 
     @ColumnInfo(name = "sets_count")
-    var count: Int = 0
+    var count: Int = 1
 ) : Parcelable, ITask {
 
     @PrimaryKey(autoGenerate = true)
