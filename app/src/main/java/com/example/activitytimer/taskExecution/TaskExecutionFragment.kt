@@ -35,10 +35,10 @@ class TaskExecutionFragment : Fragment() {
             if(it) findNavController().navigate(R.id.action_TaskExecution_to_TaskDone)
         }
 
-        viewModel.taskChanged.observe(viewLifecycleOwner) {
-            viewModel.currentSubtask?.let{
+        viewModel.currentSubtask.observe(viewLifecycleOwner) {
+            it?.let{
                 binding.taskTxvName.text = it.name
-                binding.taskTxvSetsNumber.text = resources.getString(R.string.reps_count_of_all, viewModel.subtaskRepCount, it.count)
+                // binding.taskTxvSetsNumber.text = resources.getString(R.string.reps_count_of_all, viewModel.subtaskRepCount, it.count)
             }
         }
 

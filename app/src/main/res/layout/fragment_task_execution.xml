@@ -33,6 +33,7 @@
             android:id="@+id/task_txv_sets_number"
             android:layout_width="151dp"
             android:layout_height="85dp"
+            android:text="@{@string/reps_count_of_all(viewModel.subtaskRepCount, viewModel.currentSubtask.count)}"
             tools:text="2/3" />
 
         <Button
@@ -40,8 +41,9 @@
             android:layout_width="168dp"
             android:layout_height="96dp"
             android:layout_marginTop="124dp"
-            android:onClick="@{() -> viewModel.onStart()}"
-            android:text="@string/start" />
+            android:onClick="@{() -> viewModel.onPlay()}"
+            tools:text="@string/start"
+            app:text="@{viewModel.canBePaused}" />
 
         <Button
             android:id="@+id/task_btn_skip"
@@ -49,13 +51,6 @@
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.onSkip()}"
             android:text="@string/skip" />
-
-        <Button
-            android:id="@+id/task_btn_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onPause()}"
-            android:text="@string/pause" />
 
     </LinearLayout>
 </layout>
