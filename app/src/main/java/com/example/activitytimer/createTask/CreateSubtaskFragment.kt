@@ -39,5 +39,7 @@ class CreateSubtaskFragment : Fragment() {
     private fun readInput(viewModel: CreateSubtaskViewModel, binding: FragmentCreateSubtaskBinding) {
         viewModel.subtask.time = binding.editTextTime.text.toString().toLong()
         viewModel.subtask.count = binding.editTextNumber.text.toString().toInt()
+        viewModel.subtask.playAutomatically = binding.creationChbAutomaticPlay.isChecked
+        viewModel.subtask.breakInterval = binding.editTextBreakInterval.text.toString().toLong()
     }
 }

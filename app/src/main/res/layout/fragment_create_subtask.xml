@@ -43,6 +43,19 @@
             android:ems="10"
             android:inputType="number"/>
 
+        <CheckBox
+            android:id="@+id/creation_chb_automatic_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/automatic_play" />
+
+        <EditText
+            android:id="@+id/editTextBreakInterval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task"
+            android:inputType="number"/>
+
         <Button
             android:id="@+id/button"
             android:layout_width="386dp"
