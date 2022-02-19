@@ -48,7 +48,20 @@ class TaskExecutionViewModel(
         }
     }
 
-    private fun startTimer() {
+    private fun launchTaskExecution() {
+        startTaskWithBreakTimer()
+    }
+
+    private fun startTaskWithBreakTimer() {
+        updateCurrentTaskTime(currentSubtask?.breakInterval ?: 0)
+        timer = CountDownSecondsTimer(durationInSeconds.value ?: 0,
+            { secs ->  Log.d("Life break", secs.toString());
+            updateCurrentTaskTime(secs)},
+            ::startTaskTimer)
+        timer?.start()
+    }
+
+    private fun startTaskTimer() {
         updateCurrentTaskTime(currentSubtask?.time ?: 0)
         timer = CountDownSecondsTimer(
             durationInSeconds.value ?: 0,
@@ -64,6 +77,8 @@ class TaskExecutionViewModel(
     private fun anyTasksLeft() : Boolean = subtaskIndex < subtasks.lastIndex
 
     private fun allSubtaskRepsDone(): Boolean = currentSubtask?.count == subtaskRepCount
+
+    private fun automaticPlayback(): Boolean = currentSubtask?.playAutomatically == true
 
     private fun taskCompleted() {
         // SingleLiveEvent or better - Event wrapper
@@ -108,10 +123,13 @@ class TaskExecutionViewModel(
             newSubtask()
         else
             setSubtaskRepToInitialState()
+
+        if(automaticPlayback())
+            startTaskWithBreakTimer()
     }
 
     fun onStart() {
-        startTimer()
+        launchTaskExecution()
     }
 
     fun onSkip() {

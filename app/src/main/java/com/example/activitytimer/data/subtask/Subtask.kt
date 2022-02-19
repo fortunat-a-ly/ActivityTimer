@@ -19,11 +19,17 @@ data class Subtask (
     var time: Long = 0L,
 
     @ColumnInfo(name = "sets_count")
-    var count: Int = 1
+    var count: Int = 1,
+
+    @ColumnInfo(name = "play_automatically")
+    var playAutomatically: Boolean = false
 ) : Parcelable, ITask {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0
+
+    @ColumnInfo(name = "break_interval")
+    var breakInterval: Long = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
