@@ -22,4 +22,5 @@
     <string name="well_done">Well Done!</string>
     <string name="reps_count_of_all">%d / %d</string>
     <string name="automatic_play">Automatic Play</string>
+    <string name="before_break_interval">Before Break Interval</string>
 </resources>

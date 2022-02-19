@@ -7,7 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
-import com.example.activitytimer.utils.CountDownSecondsTimer
+import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState
+import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState.Companion.TimerState
 import kotlinx.coroutines.*
 
 class TaskExecutionViewModel(
@@ -21,100 +22,76 @@ class TaskExecutionViewModel(
 
     private var subtasks: List<Subtask> = listOf()
     private var subtaskIndex = 0
-    val currentSubtask: Subtask?
-        get() = subtasks.getOrNull(subtaskIndex)
 
-    private var _subtaskRepCount: Int = 0
-    val subtaskRepCount: Int get() = _subtaskRepCount
+    private val _currentSubtask: MutableLiveData<Subtask> = MutableLiveData(null)
+    val currentSubtask: LiveData<Subtask> = _currentSubtask
+
+    private var _subtaskRepCount: MutableLiveData<Int> = MutableLiveData(0)
+    val subtaskRepCount: LiveData<Int> = _subtaskRepCount
 
     private val _allTasksDone: MutableLiveData<Boolean> = MutableLiveData(false)
     val allTasksDone: LiveData<Boolean> = _allTasksDone
 
-    private val _taskChanged: MutableLiveData<Boolean> = MutableLiveData(false)
-    val taskChanged: LiveData<Boolean> = _taskChanged
+    private var timer: CountDownSecondsTimerWithState? = null
 
-    private var timer: CountDownSecondsTimer? = null
-
-    private val _durationInSeconds: MutableLiveData<Long> by lazy { MutableLiveData(currentSubtask?.time) }
+    private var _durationInSeconds: MutableLiveData<Long> = MutableLiveData(0)
     val durationInSeconds: LiveData<Long> = _durationInSeconds
 
+    private val _canBePaused: MutableLiveData<Boolean> = MutableLiveData(false)
+    val canBePaused: LiveData<Boolean> = _canBePaused
+
     init {
-        loadSubtasks()
+        loadData()
     }
 
-    private fun loadSubtasks(){
-        uiScope.launch(Dispatchers.IO) {
+    private fun loadData(){
+        uiScope.launch {
+            loadUsers()
+            setSubtask()
+        }
+    }
+
+    private suspend fun loadUsers() {
+        withContext(Dispatchers.IO) {
             subtasks = database.getAllSubtasks(taskId)
         }
     }
 
-    private fun launchTaskExecution() {
-        startTaskWithBreakTimer()
+    private fun setSubtask() {
+        _currentSubtask.value = subtasks[subtaskIndex]
+        resetRepCount()
+        setSubtaskRepToInitialState()
     }
 
-    private fun startTaskWithBreakTimer() {
-        updateCurrentTaskTime(currentSubtask?.breakInterval ?: 0)
-        timer = CountDownSecondsTimer(durationInSeconds.value ?: 0,
-            { secs ->  Log.d("Life break", secs.toString());
-            updateCurrentTaskTime(secs)},
-            ::startTaskTimer)
+    private fun initializeBreakTimer() {
+        updateDuration(_currentSubtask.value?.breakInterval)
+        timer = CountDownSecondsTimerWithState(durationInSeconds.value ?: 0,
+                ::updateDuration,
+                ::startSubtaskTimer)
+    }
+
+    private fun startSubtaskExecution() {
+        startSubtaskWithBreakTimer()
+    }
+
+    private fun startSubtaskWithBreakTimer() {
         timer?.start()
     }
 
-    private fun startTaskTimer() {
-        updateCurrentTaskTime(currentSubtask?.time ?: 0)
-        timer = CountDownSecondsTimer(
-            durationInSeconds.value ?: 0,
-            ::updateCurrentTaskTime,
-            ::subtaskRepFinished)
-        timer?.start()
+    private fun startSubtaskTimer() {
+        updateDuration(_currentSubtask.value?.time)
+        timer = CountDownSecondsTimerWithState(
+            durationInSeconds.value  ?: 0,
+            ::updateDuration,
+            ::subtaskRepFinished).start()
     }
 
-    private fun updateCurrentTaskTime(newTime: Long) {
+    private fun resumeTaskExecution() {
+        timer?.resume()
+    }
+
+    private fun updateDuration(newTime: Long?) {
         _durationInSeconds.value = newTime
-    }
-
-    private fun anyTasksLeft() : Boolean = subtaskIndex < subtasks.lastIndex
-
-    private fun allSubtaskRepsDone(): Boolean = currentSubtask?.count == subtaskRepCount
-
-    private fun automaticPlayback(): Boolean = currentSubtask?.playAutomatically == true
-
-    private fun taskCompleted() {
-        // SingleLiveEvent or better - Event wrapper
-        _allTasksDone.value = true
-        _allTasksDone.value = false
-    }
-
-    private fun taskChanged() {
-        _taskChanged.value = true
-        _taskChanged.value = false
-    }
-
-    private fun resetRepCount() {
-        _subtaskRepCount = 0
-    }
-
-    private fun nextSubtask() {
-        subtaskIndex += 1
-    }
-
-    private fun newSubtask() {
-        if(anyTasksLeft()) {
-            nextSubtask()
-            resetRepCount()
-            setSubtaskRepToInitialState()
-        }
-        else taskCompleted()
-    }
-
-    private fun setSubtaskRepToInitialState() {
-        updateCurrentTaskTime(currentSubtask?.time ?: 0)
-        taskChanged()
-    }
-
-    private fun subtaskRepDone() {
-        _subtaskRepCount += 1
     }
 
     private fun subtaskRepFinished() {
@@ -125,20 +102,82 @@ class TaskExecutionViewModel(
             setSubtaskRepToInitialState()
 
         if(automaticPlayback())
-            startTaskWithBreakTimer()
+            startSubtaskExecution()
+        else
+            buttonToStart()
     }
 
-    fun onStart() {
-        launchTaskExecution()
+    private fun anyTasksLeft(): Boolean = subtaskIndex < subtasks.lastIndex
+
+    private fun allSubtaskRepsDone(): Boolean = _currentSubtask.value?.count == subtaskRepCount.value
+
+    private fun automaticPlayback(): Boolean = _currentSubtask.value?.playAutomatically == true
+
+    private fun newSubtask() {
+        if(anyTasksLeft()) {
+            nextSubtask()
+            setSubtask()
+        }
+        else taskCompleted()
+    }
+
+    private fun setSubtaskRepToInitialState() {
+        initializeBreakTimer()
+    }
+
+    private fun subtaskRepDone() {
+        _subtaskRepCount.value = _subtaskRepCount.value?.plus(1)
+    }
+
+    private fun resetRepCount() {
+        _subtaskRepCount.value = 0
+    }
+
+    private fun nextSubtask() {
+        subtaskIndex += 1
+    }
+
+    fun onPlay() {
+        when (timer?.state) {
+            TimerState.RUNNING -> onPause()
+            TimerState.PAUSED -> onResume()
+            else -> onStart()
+        }
+    }
+
+    private fun onStart() {
+        buttonToPause()
+        startSubtaskExecution()
+    }
+
+    private fun onResume() {
+        buttonToPause()
+        resumeTaskExecution()
+    }
+
+    private fun onPause() {
+        buttonToStart()
+        timer?.pause()
     }
 
     fun onSkip() {
         timer?.cancel()
         newSubtask()
+        buttonToStart()
     }
 
-    fun onPause(){
-        timer?.cancel()
+    private fun buttonToPause() {
+        _canBePaused.value = true
+    }
+
+    private fun buttonToStart() {
+        _canBePaused.value = false
+    }
+
+    private fun taskCompleted() {
+        // SingleLiveEvent or better - Event wrapper
+        _allTasksDone.value = true
+        _allTasksDone.value = false
     }
 
     override fun onCleared() {
