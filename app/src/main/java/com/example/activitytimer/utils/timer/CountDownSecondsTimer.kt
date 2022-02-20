@@ -1,4 +1,4 @@
-package com.example.activitytimer.utils
+package com.example.activitytimer.utils.timer
 
 import android.os.CountDownTimer
 import java.util.concurrent.TimeUnit
@@ -9,7 +9,13 @@ class CountDownSecondsTimer(
     val onFinishExecute: () -> Unit)
     : CountDownTimer(TimeUnit.SECONDS.toMillis(secondsInFuture), TimeUnit.SECONDS.toMillis(1L)) {
 
-    override fun onTick(millisUntilFinished: Long) = onTickExecute(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+    private var millisLeft = TimeUnit.SECONDS.toMillis(secondsInFuture)
+    val secondsLeft: Long get() = TimeUnit.MILLISECONDS.toSeconds(millisLeft)
+
+    override fun onTick(millisUntilFinished: Long) {
+        millisLeft = millisUntilFinished
+        onTickExecute(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+    }
 
     override fun onFinish() = onFinishExecute()
 }
