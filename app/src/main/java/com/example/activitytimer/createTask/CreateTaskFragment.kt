@@ -56,6 +56,10 @@ class CreateTaskFragment : Fragment() {
             navController.popBackStack()
         }
 
+        binding.editTextCategory.setOnClickListener {
+            ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
+        }
+
         return binding.root
     }
 

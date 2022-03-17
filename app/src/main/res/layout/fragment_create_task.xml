@@ -20,6 +20,14 @@
             android:text="@={viewModel.task.name}"
             android:inputType="text"/>
 
+        <EditText
+            android:id="@+id/editTextCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/category"
+            android:focusable="false"
+            android:inputType="text" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/creation_rcv_subtask_list"
             android:layout_width="match_parent"
