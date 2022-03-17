@@ -23,4 +23,5 @@
     <string name="reps_count_of_all">%d / %d</string>
     <string name="automatic_play">Automatic Play</string>
     <string name="before_break_interval">Before Break Interval</string>
+    <string name="category">Category</string>
 </resources>
