@@ -1,4 +1,4 @@
-package com.example.activitytimer.createTask
+package com.example.activitytimer.screens.createTask
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +10,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
-import com.example.activitytimer.createTask.viewModels.CreateTaskViewModel
-import com.example.activitytimer.createTask.viewModels.CreateTaskViewModelFactory
-import com.example.activitytimer.data.ITask
-import com.example.activitytimer.data.TaskDatabase
+import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
+import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModelFactory
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
+import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentCreateTaskBinding
-import com.example.activitytimer.listScreens.TaskListAdapter
-import com.example.activitytimer.listScreens.TaskListener
+import com.example.activitytimer.data.ITask
+import com.example.activitytimer.screens.listScreens.TaskListAdapter
+import com.example.activitytimer.screens.listScreens.TaskListener
 
 class CreateTaskFragment : Fragment() {
     private lateinit var binding: FragmentCreateTaskBinding
