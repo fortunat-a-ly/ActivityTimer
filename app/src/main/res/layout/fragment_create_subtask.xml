@@ -67,5 +67,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/button_label_later"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_later"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <Button
+            android:id="@+id/button_label_all_later"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_all_later"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
     </LinearLayout>
 </layout>

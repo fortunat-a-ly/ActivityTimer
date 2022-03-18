@@ -7,5 +7,32 @@
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.example.activitytimer.screens.timer.TimerFragment"
-        android:label="TimerFragment" />
+        android:label="TimerFragment" >
+        <action
+            android:id="@+id/action_Timer_to_CreateTask"
+            app:destination="@+id/CreateTaskFragment"/>
+        <action
+            android:id="@+id/action_Timer_to_CreateSubtask"
+            app:destination="@+id/CreateSubtaskFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/CreateTaskFragment"
+        android:name="com.example.activitytimer.screens.createTask.CreateTaskFragment"
+        android:label="Task">
+
+        <argument
+            android:name="duration"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/CreateSubtaskFragment"
+        android:name="com.example.activitytimer.screens.createTask.CreateSubtaskFragment"
+        android:label="Subtask">
+
+        <argument
+            android:name="duration"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 </navigation>

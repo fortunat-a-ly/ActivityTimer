@@ -13,11 +13,15 @@ data class Task (
     override var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 0
+    var time: Long = 0,
+
 ) : Parcelable, ITask {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0
+
+    @ColumnInfo(name = "is_constant")
+    var isConstant: Boolean = true
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

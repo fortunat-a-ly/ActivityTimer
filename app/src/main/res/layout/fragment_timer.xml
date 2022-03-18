@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="139dp"
-        android:layout_height="133dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Chronometer
+        android:id="@+id/simpleChronometer"
+        android:countDown="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        tools:layout_editor_absoluteX="255dp"
+        tools:layout_editor_absoluteY="616dp" />
+
+    <Button
+        android:id="@+id/button_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pause"
+        tools:layout_editor_absoluteX="290dp"
+        tools:layout_editor_absoluteY="556dp" />
+
+    <Button
+        android:id="@+id/button_subtask"
+        android:layout_width="138dp"
+        android:layout_height="54dp"
+        android:text="@string/to_subtask"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="619dp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="138dp"
+        android:layout_height="54dp"
+        android:text="@string/saveTask"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="619dp" />
+
+</LinearLayout>

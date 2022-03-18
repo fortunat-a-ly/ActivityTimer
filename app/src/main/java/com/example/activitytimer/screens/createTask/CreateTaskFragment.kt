@@ -17,6 +17,7 @@ import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentCreateTaskBinding
 import com.example.activitytimer.data.ITask
+import com.example.activitytimer.screens.listScreens.SubtaskListFragmentArgs
 import com.example.activitytimer.screens.listScreens.TaskListAdapter
 import com.example.activitytimer.screens.listScreens.TaskListener
 import kotlinx.coroutines.*
@@ -46,15 +47,20 @@ class CreateTaskFragment : Fragment() {
         //findNavController().currentBackStackEntry!!.saved StateHandle.get<Task>("df")
         binding.viewModel = viewModel
 
+        Log.d("ArgsDur", " before")
+        val duration = CreateTaskFragmentArgs.fromBundle(requireArguments()).duration
+
+        Log.d("ArgsDur", duration.toString())
+
         binding.floatingActionButton.setOnClickListener{
             findNavController().navigate(R.id.action_CreateTask_to_CreateSubtask)
         }
 
-        viewModel.subtaskSaved.observe(viewLifecycleOwner, { subtaskSaved ->
-            if(subtaskSaved) {
+        viewModel.subtaskSaved.observe(viewLifecycleOwner) { subtaskSaved ->
+            if (subtaskSaved) {
                 findNavController().popBackStack()
             }
-        })
+        }
 
         binding.editTextCategory.setOnClickListener {
             ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
@@ -75,7 +81,7 @@ class CreateTaskFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        var viewModelJob = Job()
+        val viewModelJob = Job()
         val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
         uiScope.launch { // launch a new coroutine and continue
