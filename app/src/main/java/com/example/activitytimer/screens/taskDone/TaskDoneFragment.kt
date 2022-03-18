@@ -1,4 +1,4 @@
-package com.example.activitytimer.taskDone
+package com.example.activitytimer.screens.taskDone
 
 import android.os.Bundle
 import android.view.LayoutInflater

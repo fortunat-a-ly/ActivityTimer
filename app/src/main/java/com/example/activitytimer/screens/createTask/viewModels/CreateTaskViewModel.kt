@@ -1,14 +1,10 @@
-package com.example.activitytimer.createTask.viewModels
+package com.example.activitytimer.screens.createTask.viewModels
 
 import android.app.Application
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.example.activitytimer.R
-import com.example.activitytimer.createTask.ChooseCategoryDialogFragment
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.Task

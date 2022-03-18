@@ -1,6 +1,7 @@
 package com.example.activitytimer
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,8 +10,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.activitytimer.databinding.ActivityMainBinding
+import com.example.activitytimer.ui.main.ViewPagerAdapter
+
+class SomeClass : Fragment(R.layout.content_main)
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,9 +32,15 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        Log.d("ViewP", "main")
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        binding.pager.adapter = adapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
+        Log.d("ViewP", "after ViewP")
+/*
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

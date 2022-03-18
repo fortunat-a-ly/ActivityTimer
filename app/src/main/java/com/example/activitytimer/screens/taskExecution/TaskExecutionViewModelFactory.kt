@@ -1,10 +1,9 @@
-package com.example.activitytimer.taskExecution
+package com.example.activitytimer.screens.taskExecution
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
-import com.example.activitytimer.data.task.TaskDatabaseDao
 
 class TaskExecutionViewModelFactory(val database: SubtaskDatabaseDao,
                                     val taskId: Long,

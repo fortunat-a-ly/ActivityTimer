@@ -1,4 +1,4 @@
-package com.example.activitytimer.taskExecution
+package com.example.activitytimer.screens.taskExecution
 
 import android.os.Bundle
 import android.view.LayoutInflater

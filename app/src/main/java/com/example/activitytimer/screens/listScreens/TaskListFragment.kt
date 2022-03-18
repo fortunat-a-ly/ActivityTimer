@@ -1,4 +1,4 @@
-package com.example.activitytimer.listScreens
+package com.example.activitytimer.screens.listScreens
 
 import android.os.Bundle
 import android.view.LayoutInflater

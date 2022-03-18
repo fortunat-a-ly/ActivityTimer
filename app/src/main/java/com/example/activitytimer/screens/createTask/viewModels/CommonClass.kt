@@ -1,7 +1,5 @@
-package com.example.activitytimer.createTask.viewModels
+package com.example.activitytimer.screens.createTask.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.activitytimer.data.subtask.Subtask
 
 object CommonClass {

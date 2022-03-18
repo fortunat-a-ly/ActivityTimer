@@ -1,12 +1,10 @@
-package com.example.activitytimer.listScreens
+package com.example.activitytimer.screens.listScreens
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.room.Database
 import com.example.activitytimer.data.DatabaseDao
 import com.example.activitytimer.data.ITask
-import com.example.activitytimer.data.task.TaskDatabaseDao
 
 class TaskListViewModel <T : ITask> (
     private val database: DatabaseDao<T>,

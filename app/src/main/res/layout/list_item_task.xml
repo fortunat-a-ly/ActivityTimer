@@ -9,7 +9,7 @@
             type="com.example.activitytimer.data.task.Task" />
         <variable
             name="taskListener"
-            type="com.example.activitytimer.listScreens.TaskListener" />
+            type="com.example.activitytimer.screens.listScreens.TaskListener" />
     </data>
 
     <LinearLayout
