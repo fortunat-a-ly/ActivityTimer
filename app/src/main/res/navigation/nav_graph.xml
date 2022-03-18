@@ -52,6 +52,11 @@
         android:name="com.example.activitytimer.screens.createTask.CreateTaskFragment"
         android:label="CreateTask">
 
+        <argument
+            android:name="duration"
+            android:defaultValue="-1L"
+            app:argType="long" />
+
         <action
             android:id="@+id/action_CreateTask_to_CreateSubtask"
             app:destination="@id/CreateSubtaskFragment" />
@@ -59,8 +64,13 @@
     <fragment
         android:id="@+id/CreateSubtaskFragment"
         android:name="com.example.activitytimer.screens.createTask.CreateSubtaskFragment"
-        android:label="CreateTask"
-        />
+        android:label="CreateTask">
+
+        <argument
+            android:name="duration"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/TaskDoneFragment"
         android:name="com.example.activitytimer.screens.taskDone.TaskDoneFragment"

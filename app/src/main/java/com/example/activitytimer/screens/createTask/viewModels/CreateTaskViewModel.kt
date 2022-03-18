@@ -23,6 +23,8 @@ class CreateTaskViewModel(
 
     val task: Task = Task()
 
+    val timeTracked = state.get<Long>("duration") != 1L
+
     val subtasks: List<Subtask> = CommonClass.subtasks
 
     override fun onCleared() {

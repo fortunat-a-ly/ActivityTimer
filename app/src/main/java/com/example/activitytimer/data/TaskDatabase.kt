@@ -4,16 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.activitytimer.data.doneTasks.DoneTaskDatabaseDao
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.Task
+import com.example.activitytimer.data.doneTasks.DoneTask
 import com.example.activitytimer.data.task.TaskDatabaseDao
 
-@Database(entities = [Task::class, Subtask::class], version = 2, exportSchema = false)
+@Database(entities = [Task::class, Subtask::class, DoneTask::class], version = 2, exportSchema = false)
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract val taskDatabaseDao: TaskDatabaseDao
     abstract val subtaskDatabaseDao: SubtaskDatabaseDao
+    abstract val doneTaskDao: DoneTaskDatabaseDao
 
     companion object {
 
