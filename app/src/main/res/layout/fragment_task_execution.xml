@@ -18,39 +18,56 @@
 
         <TextView
             android:id="@+id/task_txv_name"
-            android:layout_width="153dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginBottom="56dp" />
+            android:gravity="center"
+            android:layout_marginBottom="56dp"
+            tools:text="Pull Ups"/>
 
         <TextView
             android:id="@+id/task_txv_time"
-            android:layout_width="151dp"
+            android:layout_width="match_parent"
             android:layout_height="85dp"
+            android:textSize="50sp"
+            android:gravity="center"
             android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"
-            tools:text="String.valueOf(viewModel.duration)" />
+            tools:text="15:30" />
 
         <TextView
             android:id="@+id/task_txv_sets_number"
-            android:layout_width="151dp"
+            android:layout_width="match_parent"
             android:layout_height="85dp"
+            android:gravity="center"
             android:text="@{@string/reps_count_of_all(viewModel.subtaskRepCount, viewModel.currentSubtask.count)}"
             tools:text="2/3" />
 
-        <Button
-            android:id="@+id/task_btn_start"
-            android:layout_width="168dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="124dp"
-            android:onClick="@{() -> viewModel.onPlay()}"
-            tools:text="@string/start"
-            app:text="@{viewModel.canBePaused}" />
-
-        <Button
-            android:id="@+id/task_btn_skip"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onSkip()}"
-            android:text="@string/skip" />
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/task_btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:paddingVertical="20dp"
+                android:onClick="@{() -> viewModel.onPlay()}"
+                tools:text="@string/start"
+                app:text="@{viewModel.canBePaused}" />
+
+            <Button
+                android:id="@+id/task_btn_skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:paddingVertical="20dp"
+                android:onClick="@{() -> viewModel.onSkip()}"
+                android:text="@string/skip" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
