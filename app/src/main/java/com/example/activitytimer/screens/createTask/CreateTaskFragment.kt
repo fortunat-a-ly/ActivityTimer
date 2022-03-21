@@ -1,5 +1,6 @@
 package com.example.activitytimer.screens.createTask
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
+import com.example.activitytimer.SearchableActivity
 import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
 import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModelFactory
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
@@ -63,7 +65,8 @@ class CreateTaskFragment : Fragment() {
         }
 
         binding.editTextCategory.setOnClickListener {
-            ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
+           // ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
+            startActivity(Intent(context, SearchableActivity::class.java))
         }
 
         return binding.root
