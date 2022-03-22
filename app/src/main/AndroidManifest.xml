@@ -10,9 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ActivityTimer">
         <activity android:name=".SearchableActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:excludeFromRecents="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
