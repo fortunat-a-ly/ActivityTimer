@@ -21,19 +21,19 @@ class ChooseCategoryDialogFragment : DialogFragment() {
     private val categories = arrayOf("health", "job", "study", "sport", "shopping")
     private var checkedId: Int = -1
 
-/*    override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.dialog_choose_category, container)
 
-        val searchManager = getSystemService(requireContext(), SearchManager::class.java)
+/*        val searchManager = getSystemService(requireContext(), SearchManager::class.java)
         view.findViewById<SearchView>(R.id.search_view)
             .setSearchableInfo(searchManager?.getSearchableInfo())
-            .setIconifiedByDefault(false)
+            .setIconifiedByDefault(false)*/
         return view
-    }*/
+    }
 
 /*    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {

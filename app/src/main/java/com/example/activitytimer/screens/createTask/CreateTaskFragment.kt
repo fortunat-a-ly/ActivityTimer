@@ -65,8 +65,8 @@ class CreateTaskFragment : Fragment() {
         }
 
         binding.editTextCategory.setOnClickListener {
-           // ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
-            startActivity(Intent(context, SearchableActivity::class.java))
+            ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
+            //startActivity(Intent(context, SearchableActivity::class.java))
         }
 
         return binding.root
