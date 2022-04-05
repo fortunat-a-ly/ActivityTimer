@@ -37,15 +37,17 @@ android {
     dataBinding {
         enabled = true
     }
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
-    def fragment_version = "1.4.1"
+    // Java
+    implementation "androidx.fragment:fragment:$version_fragment"
 
-    // Java language implementation
-    implementation "androidx.fragment:fragment:$fragment_version"
     // Kotlin
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -65,5 +67,7 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
+
+    kapt "com.android.databinding:compiler:3.1.4"
 
 }
