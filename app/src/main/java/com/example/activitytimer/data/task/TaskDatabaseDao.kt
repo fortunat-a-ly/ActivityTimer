@@ -9,7 +9,7 @@ import com.example.activitytimer.data.task.Task
 @Dao
 interface TaskDatabaseDao {
     @Insert
-    fun insert(task: Task)
+    fun insert(task: Task) : Long
 
     @Query("SELECT * from task_table WHERE id = :key")
     fun get(key: Long): Task?

@@ -1,6 +1,7 @@
 package com.example.activitytimer.createTask.viewModels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,8 +42,14 @@ class CreateTaskViewModel(
     fun saveToDatabase() {
         uiScope.launch {
             withContext(Dispatchers.IO){
-                database.insert(task)
-                databaseSubtask.insert(CommonClass.subtasks)
+                val key = database.insert(task)
+                // Log.d("Life", subtasks.toString())
+                subtasks.forEach { it ->
+                    it.taskId = key
+                }
+                // Log.d("Life", "finish")
+                databaseSubtask.insert(subtasks)
+                CommonClass.subtasks.clear()
             }
         }
     }
