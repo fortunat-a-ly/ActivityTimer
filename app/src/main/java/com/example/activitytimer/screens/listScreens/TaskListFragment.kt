@@ -5,30 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
-import com.example.activitytimer.data.TaskDatabase
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskListFragment : Fragment() {
 
-    private lateinit var viewModel: TaskListViewModel<*>
+    private val viewModel: TaskListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val application = requireNotNull(this.activity).application
-        val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-
-
-        val viewModelFactory = TaskListViewModelFactory(dataSource, application)
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(TaskListViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_task_list, container, false)
     }

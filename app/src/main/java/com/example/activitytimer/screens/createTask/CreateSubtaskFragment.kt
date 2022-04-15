@@ -1,22 +1,19 @@
 package com.example.activitytimer.screens.createTask
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.screens.createTask.viewModels.CreateSubtaskViewModel
 import com.example.activitytimer.databinding.FragmentCreateSubtaskBinding
 
 class CreateSubtaskFragment : Fragment() {
     private lateinit var binding: FragmentCreateSubtaskBinding
-    private lateinit var viewModel: CreateSubtaskViewModel
-
-    private val isTimeTracking: Boolean = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration != -1L
+    private val viewModel: CreateSubtaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +21,10 @@ class CreateSubtaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateSubtaskBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this).get(CreateSubtaskViewModel::class.java)
         binding.viewModel = viewModel
 
         val navController = findNavController()
+        val isTimeTracking: Boolean = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration != -1L
 
         if(isTimeTracking) {
             setupView()

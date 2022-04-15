@@ -1,20 +1,19 @@
 package com.example.activitytimer.screens.taskExecution
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState.Companion.TimerState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class TaskExecutionViewModel(
+@HiltViewModel
+class TaskExecutionViewModel @Inject constructor(
     private val database: SubtaskDatabaseDao,
-    private val taskId: Long,
-    application: Application
-) : AndroidViewModel(application) {
+    state: SavedStateHandle
+) : ViewModel() {
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
@@ -38,6 +37,8 @@ class TaskExecutionViewModel(
 
     private val _canBePaused: MutableLiveData<Boolean> = MutableLiveData(false)
     val canBePaused: LiveData<Boolean> = _canBePaused
+
+    val taskId: Long = state.get<Long>("taskId")!!
 
     init {
         loadData()

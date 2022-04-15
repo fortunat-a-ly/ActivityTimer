@@ -1,22 +1,20 @@
 package com.example.activitytimer.screens.createTask.viewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.*
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.Task
 import com.example.activitytimer.data.task.TaskDatabaseDao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class CreateTaskViewModel(
+@HiltViewModel
+class CreateTaskViewModel @Inject constructor(
     private val database: TaskDatabaseDao,
     private val databaseSubtask: SubtaskDatabaseDao,
-    val state: SavedStateHandle,
-    application: Application // ? error if add "val"
-    )  : AndroidViewModel(application) {
+    private val state: SavedStateHandle
+    )  : ViewModel() {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)

@@ -5,24 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
 import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
-import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModelFactory
-import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
-import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentCreateTaskBinding
 import com.example.activitytimer.data.ITask
 import com.example.activitytimer.screens.listScreens.TaskListAdapter
 import com.example.activitytimer.screens.listScreens.TaskListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateTaskFragment : Fragment() {
     private lateinit var binding: FragmentCreateTaskBinding
-    private lateinit var viewModel: CreateTaskViewModel
-    private lateinit var subtaskSource: SubtaskDatabaseDao
+    private val viewModel: CreateTaskViewModel by viewModels()
     private lateinit var navController: NavController
 
     override fun onCreateView(
@@ -32,17 +30,7 @@ class CreateTaskFragment : Fragment() {
     ): View {
         binding = FragmentCreateTaskBinding.inflate(inflater)
 
-        val application = requireNotNull(this.activity).application
-        // Create an instance of the ViewModel Factory.
-        val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-        subtaskSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
-        val viewModelFactory = CreateTaskViewModelFactory(dataSource, subtaskSource,this, application)
-
         navController = findNavController()
-
-        // Get a reference to the ViewModel associated with this fragment.
-        viewModel = ViewModelProvider(
-                this, viewModelFactory).get(CreateTaskViewModel::class.java)
 
         binding.viewModel = viewModel
 

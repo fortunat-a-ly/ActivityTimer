@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
-import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentTaskListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SubtaskListFragment : Fragment() {
     private lateinit var binding: FragmentTaskListBinding
-    private lateinit var viewModel: TaskListViewModel<*>
+    private val viewModel: SubtaskListViewModel by viewModels()
+    val taskId: Long = SubtaskListFragmentArgs.fromBundle(requireArguments()).taskId
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,15 +28,6 @@ class SubtaskListFragment : Fragment() {
     ): View {
         binding = FragmentTaskListBinding.inflate(inflater)
         binding.fab.background = (ResourcesCompat.getDrawable(resources, R.drawable.ic_execute_task, null))
-
-        val application = requireNotNull(this.activity).application
-        val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
-
-        val taskId: Long = SubtaskListFragmentArgs.fromBundle(requireArguments()).taskId
-
-        val viewModelFactory = SubtaskListViewModelFactory(dataSource, taskId, application)
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(TaskListViewModel::class.java)
 
         binding.fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(

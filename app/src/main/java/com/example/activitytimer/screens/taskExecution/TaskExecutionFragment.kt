@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.R
-import com.example.activitytimer.data.TaskDatabase
 import com.example.activitytimer.databinding.FragmentTaskExecutionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskExecutionFragment : Fragment() {
     private lateinit var binding: FragmentTaskExecutionBinding
-    private lateinit var viewModelFactory: TaskExecutionViewModelFactory
-    private lateinit var viewModel: TaskExecutionViewModel
+    private val viewModel: TaskExecutionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,14 +22,6 @@ class TaskExecutionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTaskExecutionBinding.inflate(inflater, container, false)
-
-        val application = requireNotNull(this.activity).application
-        val dataSource = TaskDatabase.getInstance(application).subtaskDatabaseDao
-
-        val taskId = TaskExecutionFragmentArgs.fromBundle(requireArguments()).taskId
-
-        viewModelFactory = TaskExecutionViewModelFactory(dataSource, taskId, application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TaskExecutionViewModel::class.java)
 
         viewModel.allTasksDone.observe(viewLifecycleOwner) {
             if(it) findNavController().navigate(R.id.action_TaskExecution_to_TaskDone)

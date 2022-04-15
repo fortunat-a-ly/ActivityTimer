@@ -1,16 +1,13 @@
 package com.example.activitytimer.screens.listScreens
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.activitytimer.data.DatabaseDao
-import com.example.activitytimer.data.ITask
+import androidx.lifecycle.ViewModel
+import com.example.activitytimer.data.task.Task
+import com.example.activitytimer.data.task.TaskDatabaseDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class TaskListViewModel <T : ITask> (
-    private val database: DatabaseDao<T>,
-    private val taskId: Long,
-    application: Application
-) : AndroidViewModel(application) {
-
-    val tasks: LiveData<List<T>> = database.getAllTasks(taskId)
+@HiltViewModel
+class TaskListViewModel @Inject constructor(database: TaskDatabaseDao) : ViewModel() {
+    val tasks: LiveData<List<Task>> = database.get()
 }
