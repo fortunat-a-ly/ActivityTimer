@@ -1,7 +1,6 @@
 package com.example.activitytimer.screens.createTask
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,8 @@ class CreateSubtaskFragment : Fragment() {
         binding.viewModel = viewModel
 
         val navController = findNavController()
-        val isTimeTracking: Boolean = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration != -1L
+        val trackedDuration = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration
+        val isTimeTracking: Boolean = trackedDuration != -1L
 
         if(isTimeTracking) {
             setupView()
@@ -42,14 +42,13 @@ class CreateSubtaskFragment : Fragment() {
             binding.buttonLabelLater.setOnClickListener {
                 navController.popBackStack()
             }
+
+            viewModel.subtask.time = trackedDuration
         }
 
         viewModel.subtaskSaved.observe(viewLifecycleOwner) { subtaskSaved ->
-            if (subtaskSaved) {
-                Log.d("BugH", "before click")
-                readInput()
+            if (subtaskSaved && readInput()) {
                 navController.popBackStack()
-                Log.d("BugH", "after click")
             }
         }
 
@@ -63,15 +62,26 @@ class CreateSubtaskFragment : Fragment() {
             val seconds = Duration.seconds(bundle.getInt("seconds"))
             val duration = hours.plus(minutes).plus(seconds)
             viewModel.subtask.time = duration.inWholeSeconds
+            binding.editTextTime.setText(duration.toString())
         }
 
         return binding.root
     }
 
-    private fun readInput() {
-        viewModel.subtask.count = binding.editTextNumber.text.toString().toInt()
-        viewModel.subtask.playAutomatically = binding.creationChbAutomaticPlay.isChecked
-        viewModel.subtask.breakInterval = binding.editTextBreakInterval.text.toString().toLong()
+    private fun readInput() : Boolean {
+        val allFieldsEntered = binding.editTextTime.text.trim().isNotEmpty() &&
+                binding.editTextName.text.trim().isNotEmpty()
+
+        if(allFieldsEntered) {
+            viewModel.subtask.name = binding.editTextTime.text.trim().toString()
+            viewModel.subtask.playAutomatically = binding.creationChbAutomaticPlay.isChecked
+            if(binding.editTextNumber.text.trim().isNotEmpty())
+                viewModel.subtask.count = binding.editTextNumber.text.toString().toInt()
+            return true
+        }
+
+        Toast.makeText(context, "Fill all the fields", Toast.LENGTH_LONG).show()
+        return false
     }
 
     private fun setupView() {
