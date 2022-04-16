@@ -50,6 +50,7 @@ class CreateTaskViewModel @Inject constructor(
                 // Log.d("Life", subtasks.toString())
                 subtasks.forEach { it ->
                     it.taskId = key
+                    it.time += it.time
                 }
                 // Log.d("Life", "finish")
                 databaseSubtask.insert(subtasks)
