@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -39,9 +40,14 @@ class CreateTaskFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            viewModel.saveToDatabase()
-            navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
-            navController.popBackStack()
+            if(viewModel.canBeSaved) {
+                viewModel.saveToDatabase()
+                navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
+                navController.popBackStack()
+            }
+            else {
+                Toast.makeText(context, "No subtasks created", Toast.LENGTH_LONG).show()
+            }
         }
 
         binding.editTextCategory.setOnClickListener {
