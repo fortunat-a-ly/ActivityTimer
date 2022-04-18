@@ -28,7 +28,7 @@ class CreateTaskViewModel @Inject constructor(
 
     val subtasks: List<Subtask> = CommonClass.subtasks
 
-    val canBeSaved: Boolean get() = subtasks.isNotEmpty()
+    val canBeSaved: Boolean get() = subtasks.isNotEmpty() || task.duration > 0L
 
     override fun onCleared() {
         super.onCleared()
