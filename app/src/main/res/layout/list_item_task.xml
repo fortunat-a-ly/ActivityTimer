@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:text="@{DurationString.INSTANCE.fromSeconds(task.time)}"/>
+            android:text="@{DurationString.INSTANCE.fromSeconds(task.duration)}"/>
 
     </LinearLayout>
 </layout>

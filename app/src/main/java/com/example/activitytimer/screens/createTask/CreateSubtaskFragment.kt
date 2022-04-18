@@ -43,7 +43,7 @@ class CreateSubtaskFragment : Fragment() {
                 navController.popBackStack()
             }
 
-            viewModel.subtask.time = trackedDuration
+            viewModel.subtask.duration = trackedDuration
         }
 
         viewModel.subtaskSaved.observe(viewLifecycleOwner) { subtaskSaved ->
@@ -61,7 +61,7 @@ class CreateSubtaskFragment : Fragment() {
             val minutes = Duration.minutes(bundle.getInt("minutes"))
             val seconds = Duration.seconds(bundle.getInt("seconds"))
             val duration = hours.plus(minutes).plus(seconds)
-            viewModel.subtask.time = duration.inWholeSeconds
+            viewModel.subtask.duration = duration.inWholeSeconds
             binding.editTextTime.setText(duration.toString())
         }
 
@@ -88,6 +88,6 @@ class CreateSubtaskFragment : Fragment() {
         binding.buttonLabelAllLater.visibility = View.VISIBLE
         binding.buttonLabelLater.visibility = View.VISIBLE
 
-        viewModel.subtask.time = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration
+        viewModel.subtask.duration = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration
     }
 }

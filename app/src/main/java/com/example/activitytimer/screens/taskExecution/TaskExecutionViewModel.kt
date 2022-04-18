@@ -79,7 +79,7 @@ class TaskExecutionViewModel @Inject constructor(
     }
 
     private fun startSubtaskTimer() {
-        updateDuration(_currentSubtask.value?.time)
+        updateDuration(_currentSubtask.value?.duration)
         timer = CountDownSecondsTimerWithState(
             durationInSeconds.value  ?: 0,
             ::updateDuration,

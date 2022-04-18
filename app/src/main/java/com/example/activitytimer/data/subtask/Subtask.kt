@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.activitytimer.data.ITask
+import com.example.activitytimer.data.task.Task
 
 @Entity(tableName = "subtask_table")
 data class Subtask (
@@ -16,7 +17,7 @@ data class Subtask (
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 0L,
+    var duration: Long = 0L,
 
     @ColumnInfo(name = "sets_count")
     var count: Int = 1,
@@ -47,7 +48,7 @@ data class Subtask (
         parcel!!.apply {
             writeLong(taskId)
             writeString(name)
-            writeLong(time)
+            writeLong(duration)
             writeInt(count)
         }
     }

@@ -13,9 +13,9 @@ data class Task (
     var name: String = "",
 
     @ColumnInfo(name = "time")
-    var time: Long = 0,
+    var duration: Long = 0,
 
-) : Parcelable, ITask {
+    ) : Parcelable, ITask {
 
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0
@@ -35,7 +35,7 @@ data class Task (
     override fun writeToParcel(parcel: Parcel?, p1: Int) {
         parcel!!.apply {
             writeString(name)
-            writeLong(time)
+            writeLong(duration)
         }
     }
 
