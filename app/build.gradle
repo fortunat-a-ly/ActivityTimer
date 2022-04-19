@@ -34,24 +34,35 @@ android {
     }
     buildFeatures {
         viewBinding true
+        compose true
     }
     dataBinding {
         enabled = true
     }
+    kapt {
+        generateStubs = true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion '1.1.1'
+    }
 }
 
 dependencies {
+    // Java
+    implementation "androidx.fragment:fragment:$version_fragment"
+
+    // Kotlin
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
     // Room and Lifecycle dependencies
     implementation "androidx.room:room-runtime:$version_room"
@@ -66,5 +77,19 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.1.1'
+    // Animations
+    //implementation 'androidx.compose.animation:animation:1.1.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+    // UI Tests
+    //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
 
 }

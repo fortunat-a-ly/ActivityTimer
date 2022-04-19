@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
 import com.example.activitytimer.data.ITask
 import com.example.activitytimer.databinding.FragmentSubtaskListBinding
-import com.example.activitytimer.databinding.FragmentTaskListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +26,7 @@ class SubtaskListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSubtaskListBinding.inflate(inflater)
-        binding.list.fab.background = (ResourcesCompat.getDrawable(resources, R.drawable.ic_execute_task, null))
+        binding.list.fab.setImageResource(R.drawable.ic_execute_task)
 
         binding.list.fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(
