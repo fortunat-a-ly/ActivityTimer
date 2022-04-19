@@ -15,6 +15,9 @@ interface TaskDatabaseDao : DatabaseDao<Task> {
     @Query("SELECT * from task_table WHERE id = :key")
     fun get(key: Long): Task?
 
+    @Query("SELECT * from task_table WHERE id = :key")
+    fun getLive(key: Long): LiveData<Task>
+
     @Query("SELECT * FROM task_table WHERE name != :taskKey ORDER BY name ASC")
     override fun getAllTasks(taskKey: Long): LiveData<List<Task>>
 

@@ -28,4 +28,11 @@
     <string name="to_subtask">Subtask it</string>
     <string name="label_later">Label later</string>
     <string name="label_all_later">Label All Later</string>
+    <string name="duration_distribution">%d active task execution\n%d breaks</string>
+    <plurals name="reps_count">
+        <item quantity="zero">1 rep</item>
+        <item quantity="one">%d rep</item>
+        <item quantity="other">%d reps</item>
+    </plurals>
+    <string name="break_before">Break: %s</string>
 </resources>

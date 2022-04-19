@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
 import com.example.activitytimer.data.ITask
+import com.example.activitytimer.databinding.FragmentSubtaskListBinding
 import com.example.activitytimer.databinding.FragmentTaskListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SubtaskListFragment : Fragment() {
-    private lateinit var binding: FragmentTaskListBinding
+    private lateinit var binding: FragmentSubtaskListBinding
     private val viewModel: SubtaskListViewModel by viewModels()
 
     override fun onCreateView(
@@ -26,10 +27,10 @@ class SubtaskListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTaskListBinding.inflate(inflater)
-        binding.fab.background = (ResourcesCompat.getDrawable(resources, R.drawable.ic_execute_task, null))
+        binding = FragmentSubtaskListBinding.inflate(inflater)
+        binding.list.fab.background = (ResourcesCompat.getDrawable(resources, R.drawable.ic_execute_task, null))
 
-        binding.fab.setOnClickListener(
+        binding.list.fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(
                 SubtaskListFragmentDirections.actionSubtaskListToTaskExecution(viewModel.taskId)
             )
@@ -39,7 +40,7 @@ class SubtaskListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val recyclerView: RecyclerView = binding.taskList
+        val recyclerView: RecyclerView = binding.list.taskList
         val adapter = TaskListAdapter (TaskListener { taskId -> listItemOnClick(taskId) }, R.layout.list_item_subtask)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -48,6 +49,15 @@ class SubtaskListFragment : Fragment() {
             adapter.submitList(it as List<ITask>?)
             // Log.d("Subtasks", viewModel.tasks.value.toString())
             // Log.d("Subtasks", viewModel.tasks.value?.size.toString())
+        }
+
+        viewModel.task.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.listTxvName.text = it.name
+                binding.listTxvDuration.text = it.duration.toString()
+                binding.listTxvDurationDistribution.text = getString(R.string.duration_distribution, it.duration, it.duration)
+                // TODO("above formatted duration")
+            }
         }
 
         super.onViewCreated(view, savedInstanceState)

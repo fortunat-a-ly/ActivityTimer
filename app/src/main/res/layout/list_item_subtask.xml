@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="task"
             type="com.example.activitytimer.data.subtask.Subtask" />
+        <import type="com.example.activitytimer.utils.DurationString"/>
     </data>
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
             android:text="@{task.name}"
-            android:background="@color/purple_200"/>
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Task"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="13sp"
+            android:text="@{@string/break_before(DurationString.INSTANCE.fromSeconds(task.breakInterval))}"
+            tools:text="Break Before: 5 s"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="13sp"
+            android:text="@{@plurals/reps_count(task.count, task.count)}"
+            tools:text="3 reps"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:text="@{DurationString.INSTANCE.fromSeconds(task.duration)}"
+            tools:text="14:00"/>
+
     </LinearLayout>
 </layout>
