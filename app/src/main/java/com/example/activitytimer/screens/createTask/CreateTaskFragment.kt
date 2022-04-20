@@ -1,6 +1,5 @@
 package com.example.activitytimer.screens.createTask
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
-import com.example.activitytimer.SearchableActivity
 import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
 import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModelFactory
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
@@ -46,7 +44,6 @@ class CreateTaskFragment : Fragment() {
         viewModel = ViewModelProvider(
                 this, viewModelFactory).get(CreateTaskViewModel::class.java)
 
-        //findNavController().currentBackStackEntry!!.saved StateHandle.get<Task>("df")
         binding.viewModel = viewModel
 
         binding.floatingActionButton.setOnClickListener{
@@ -55,6 +52,7 @@ class CreateTaskFragment : Fragment() {
 
         binding.buttonSave.setOnClickListener {
             viewModel.saveToDatabase()
+            navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
             navController.popBackStack()
         }
 

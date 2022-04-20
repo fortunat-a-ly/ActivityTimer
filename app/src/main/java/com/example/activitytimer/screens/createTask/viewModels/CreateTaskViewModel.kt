@@ -21,7 +21,10 @@ class CreateTaskViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    val task: Task = Task()
+    val task: Task = Task().apply {
+        // if duration tracked then it`s one time activity
+        isConstant = state.get<Long>("duration") == 1L
+    }
 
     val timeTracked = state.get<Long>("duration") != 1L
 
