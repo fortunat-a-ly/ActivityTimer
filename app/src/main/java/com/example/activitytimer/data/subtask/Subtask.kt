@@ -40,6 +40,11 @@ data class Subtask (
     ) {
     }
 
+    constructor(task: Task) : this(
+        name = task.name,
+        duration = task.duration
+    )
+
     override fun describeContents(): Int {
         return 0
     }

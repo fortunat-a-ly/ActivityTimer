@@ -3,6 +3,7 @@ package com.example.activitytimer.screens.taskExecution
 import androidx.lifecycle.*
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
+import com.example.activitytimer.data.task.TaskDatabaseDao
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState.Companion.TimerState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,14 +12,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskExecutionViewModel @Inject constructor(
-    private val database: SubtaskDatabaseDao,
+    private val subtasksDao: SubtaskDatabaseDao,
+    private val taskDao: TaskDatabaseDao,
     state: SavedStateHandle
 ) : ViewModel() {
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    private var subtasks: List<Subtask> = listOf()
+    private var subtasks: MutableList<Subtask> = mutableListOf()
     private var subtaskIndex = 0
 
     private val _currentSubtask: MutableLiveData<Subtask> = MutableLiveData(null)
@@ -53,7 +55,9 @@ class TaskExecutionViewModel @Inject constructor(
 
     private suspend fun loadUsers() {
         withContext(Dispatchers.IO) {
-            subtasks = database.getAllSubtasks(taskId)
+            subtasks = subtasksDao.getAllSubtasks(taskId) as MutableList<Subtask>
+            if(subtasks.isEmpty())
+                subtasks.add(Subtask(taskDao.get(taskId)!!))
         }
     }
 

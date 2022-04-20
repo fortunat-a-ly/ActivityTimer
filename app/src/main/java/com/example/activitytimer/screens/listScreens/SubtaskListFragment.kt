@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitytimer.R
+import com.example.activitytimer.data.ITask
 import com.example.activitytimer.databinding.FragmentTaskListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SubtaskListFragment : Fragment() {
     private lateinit var binding: FragmentTaskListBinding
     private val viewModel: SubtaskListViewModel by viewModels()
-    val taskId: Long = SubtaskListFragmentArgs.fromBundle(requireArguments()).taskId
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +31,7 @@ class SubtaskListFragment : Fragment() {
 
         binding.fab.setOnClickListener(
             Navigation.createNavigateOnClickListener(
-                SubtaskListFragmentDirections.actionSubtaskListToTaskExecution(taskId)
+                SubtaskListFragmentDirections.actionSubtaskListToTaskExecution(viewModel.taskId)
             )
         )
 
@@ -44,8 +44,8 @@ class SubtaskListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.subtasks.observe(viewLifecycleOwner) {
+            adapter.submitList(it as List<ITask>?)
             // Log.d("Subtasks", viewModel.tasks.value.toString())
             // Log.d("Subtasks", viewModel.tasks.value?.size.toString())
         }
