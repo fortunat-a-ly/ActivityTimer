@@ -1,6 +1,7 @@
 package com.example.activitytimer.screens.taskExecution
 
 import androidx.lifecycle.*
+import com.example.activitytimer.data.doneTasks.DoneTask
 import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.TaskDatabaseDao
@@ -8,6 +9,7 @@ import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState.Companion.TimerState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -179,9 +181,19 @@ class TaskExecutionViewModel @Inject constructor(
     }
 
     private fun taskCompleted() {
+        saveDoneTask()
+
         // SingleLiveEvent or better - Event wrapper
         _allTasksDone.value = true
         _allTasksDone.value = false
+    }
+
+    private fun saveDoneTask() {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                taskDao.insertDatedTask(DoneTask(date = Calendar.getInstance().timeInMillis, taskId = taskId))
+            }
+        }
     }
 
     override fun onCleared() {
