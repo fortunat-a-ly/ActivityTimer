@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.activitytimer.databinding.ActivityMainBinding
+import com.example.activitytimer.screens.doneTasks.DoneTaskList
 import com.example.activitytimer.ui.main.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,11 +33,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        Log.d("ViewP", "main")
-        val adapter = ViewPagerAdapter(supportFragmentManager)
-        binding.pager.adapter = adapter
-        binding.tabLayout.setupWithViewPager(binding.pager)
-        Log.d("ViewP", "after ViewP")
+        val firstFragment=Fragment(R.layout.content_main)
+        val secondFragment=Fragment(R.layout.content_timer)
+
+        setCurrentFragment(firstFragment)
+
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.tasks->setCurrentFragment(firstFragment)
+                R.id.timer->setCurrentFragment(secondFragment)
+                R.id.results->setCurrentFragment(DoneTaskList())
+            }
+            true
+        }
 /*
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -64,5 +73,11 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+    private fun setCurrentFragment(fragment:Fragment)=
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment,fragment)
+            commit()
+        }
 
 }
