@@ -34,6 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/duration"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="time" />
 
         <androidx.recyclerview.widget.RecyclerView

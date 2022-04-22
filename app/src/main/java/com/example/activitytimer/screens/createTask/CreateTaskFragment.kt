@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -61,16 +62,18 @@ class CreateTaskFragment : Fragment() {
         }
 
         binding.editTextDuration.setOnClickListener {
+            clearFragmentResultListener("durationBundle")
+            setFragmentResultListener("durationBundle") { _, bundle ->
+                val hours = Duration.hours(bundle.getInt("hours"))
+                val minutes = Duration.minutes(bundle.getInt("minutes"))
+                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val duration = hours.plus(minutes).plus(seconds)
+                if(duration.inWholeSeconds > 0L) {
+                    viewModel.task.duration = duration.inWholeSeconds
+                    binding.editTextDuration.setText(duration.toString())
+                }
+            }
             DurationPickerDialogFragment().show(parentFragmentManager, null)
-        }
-
-        setFragmentResultListener("durationBundle") { _, bundle ->
-            val hours = Duration.hours(bundle.getInt("hours"))
-            val minutes = Duration.minutes(bundle.getInt("minutes"))
-            val seconds = Duration.seconds(bundle.getInt("seconds"))
-            val duration = hours.plus(minutes).plus(seconds)
-            viewModel.task.duration = duration.inWholeSeconds
-            binding.editTextDuration.setText(duration.toString())
         }
 
         adapter = TaskListAdapter (TaskListener { }, R.layout.list_item_subtask)

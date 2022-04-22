@@ -33,7 +33,10 @@
             android:layout_height="wrap_content"
             android:textIsSelectable="false"
             android:hint="@string/duration"
-            android:ems="10"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="time" />
 
         <EditText
@@ -55,6 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/before_break_interval"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="number"/>
 
         <Button

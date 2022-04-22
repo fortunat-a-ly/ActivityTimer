@@ -17,8 +17,8 @@ class DurationPickerDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val binding = DialogDurationPickerBinding.inflate(layoutInflater)
-            binding.secondPicker.maxValue = 60
-            binding.minutePicker.maxValue = 60
+            binding.secondPicker.maxValue = 59
+            binding.minutePicker.maxValue = 59
             binding.hourPicker.maxValue = 24
             AlertDialog.Builder(it)
                 // Pass null as the parent view because its going in the dialog layout

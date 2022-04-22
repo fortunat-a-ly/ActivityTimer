@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -53,16 +54,33 @@ class CreateSubtaskFragment : Fragment() {
         }
 
         binding.editTextTime.setOnClickListener {
+            clearFragmentResultListener("durationBundle")
+            setFragmentResultListener("durationBundle") { _, bundle ->
+                val hours = Duration.hours(bundle.getInt("hours"))
+                val minutes = Duration.minutes(bundle.getInt("minutes"))
+                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val duration = hours.plus(minutes).plus(seconds)
+                if(duration.inWholeSeconds > 0L) {
+                    viewModel.subtask.duration = duration.inWholeSeconds
+                    binding.editTextTime.setText(duration.toString())
+                }
+            }
             DurationPickerDialogFragment().show(parentFragmentManager, null)
         }
 
-        setFragmentResultListener("durationBundle") { _, bundle ->
-            val hours = Duration.hours(bundle.getInt("hours"))
-            val minutes = Duration.minutes(bundle.getInt("minutes"))
-            val seconds = Duration.seconds(bundle.getInt("seconds"))
-            val duration = hours.plus(minutes).plus(seconds)
-            viewModel.subtask.duration = duration.inWholeSeconds
-            binding.editTextTime.setText(duration.toString())
+        binding.editTextBreakInterval.setOnClickListener {
+            clearFragmentResultListener("durationBundle")
+            setFragmentResultListener("durationBundle") { _, bundle ->
+                val hours = Duration.hours(bundle.getInt("hours"))
+                val minutes = Duration.minutes(bundle.getInt("minutes"))
+                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val duration = hours.plus(minutes).plus(seconds)
+                if(duration.inWholeSeconds > 0) {
+                    viewModel.subtask.duration = duration.inWholeSeconds
+                    binding.editTextBreakInterval.setText(duration.toString())
+                }
+            }
+            DurationPickerDialogFragment().show(parentFragmentManager, null)
         }
 
         return binding.root
