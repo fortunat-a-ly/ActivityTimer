@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/tasks"
-        android:title="Tasks" />
+        android:id="@+id/nav_graph_tasks"
+        android:title="@string/tasks" />
 
     <item
-        android:id="@+id/timer"
-        android:title="Timer" />
+        android:id="@+id/nav_graph_timer"
+        android:title="@string/timer" />
 
     <item
-        android:id="@+id/results"
-        android:title="Results" />
+        android:id="@+id/nav_graph_results"
+        android:title="@string/results"/>
 
 </menu>

@@ -35,4 +35,7 @@
         <item quantity="other">%d reps</item>
     </plurals>
     <string name="break_before">Break: %s</string>
+    <string name="tasks">Tasks</string>
+    <string name="timer">Timer</string>
+    <string name="results">Results</string>
 </resources>
