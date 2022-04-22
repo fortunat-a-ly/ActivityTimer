@@ -88,14 +88,20 @@ class CreateTaskFragment : Fragment() {
         updateView()
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun updateView() {
         adapter.submitList(viewModel.subtasks as List<ITask>?)
 
         // you can enter task duration if u have no subtasks
         binding.editTextDuration.visibility = when(viewModel.subtasks.isEmpty()) {
-            true -> View.VISIBLE
+            true -> {
+                if(viewModel.task.duration > 0L)
+                    binding.editTextDuration.setText(Duration.seconds(viewModel.task.duration).toString())
+                View.VISIBLE
+            }
             else -> View.GONE
         }
+
     }
 
 }

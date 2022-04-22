@@ -24,6 +24,7 @@ class CreateTaskViewModel @Inject constructor(
     val task: Task = Task().apply {
         // if duration tracked then it`s one time activity
         isConstant = state.get<Long>("duration") == 1L
+        duration = state.get<Long>("duration") ?: 0L
     }
 
     val timeTracked = state.get<Long>("duration") != 1L

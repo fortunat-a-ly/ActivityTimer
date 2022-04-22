@@ -45,6 +45,7 @@ class CreateSubtaskFragment : Fragment() {
             }
 
             viewModel.subtask.duration = trackedDuration
+            binding.editTextTime.setText(Duration.seconds(trackedDuration).toString())
         }
 
         viewModel.subtaskSaved.observe(viewLifecycleOwner) { subtaskSaved ->
