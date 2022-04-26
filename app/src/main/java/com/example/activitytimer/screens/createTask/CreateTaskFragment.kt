@@ -49,6 +49,11 @@ class CreateTaskFragment : Fragment() {
             if(viewModel.canBeSaved) {
                 viewModel.saveToDatabase()
                 navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
+
+                if(viewModel.timeTracked) {
+                    navController.previousBackStackEntry?.viewModelStore?.clear()
+                }
+
                 navController.popBackStack()
             }
             else {
