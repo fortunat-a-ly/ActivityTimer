@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Chronometer
-        android:id="@+id/timer_chronometer"
+    <TextView
+        android:id="@+id/txv_timer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="50sp"
-        android:countDown="false" />
+        android:layout_weight="1"
+        android:text="0s"/>
 
     <Button
         android:id="@+id/button_start"

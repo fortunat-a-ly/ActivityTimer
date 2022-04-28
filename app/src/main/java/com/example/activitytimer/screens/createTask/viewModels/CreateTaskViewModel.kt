@@ -6,10 +6,12 @@ import com.example.activitytimer.data.subtask.Subtask
 import com.example.activitytimer.data.subtask.SubtaskDatabaseDao
 import com.example.activitytimer.data.task.Task
 import com.example.activitytimer.data.task.TaskDatabaseDao
+import com.example.activitytimer.screens.timer.TimerService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.util.*
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class CreateTaskViewModel @Inject constructor(
@@ -21,20 +23,22 @@ class CreateTaskViewModel @Inject constructor(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
+    val timeTracked: Boolean = state.get<Boolean>("isTracked") ?: false
+
     val task: Task = Task().apply {
         // if duration tracked then it`s one time activity
-        isConstant = state.get<Long>("duration") == 1L
-        duration = state.get<Long>("duration") ?: 0L
+        isConstant = !timeTracked
+        if(timeTracked)
+            duration = TimerService.timeRunInMillis.value?.milliseconds!!.inWholeSeconds
     }
 
-    val timeTracked = state.get<Long>("duration") != 1L
-
-    val subtasks: List<Subtask> = CommonClass.subtasks
+    val subtasks: List<Subtask> = if(timeTracked) TimerService.trackedSubtasks else CommonClass.subtasks
 
     val canBeSaved: Boolean get() = subtasks.isNotEmpty() || task.duration > 0L
 
     override fun onCleared() {
         super.onCleared()
+        CommonClass.subtasks.clear()
         viewModelJob.cancel()
     }
 
@@ -49,18 +53,30 @@ class CreateTaskViewModel @Inject constructor(
     fun saveToDatabase() {
         uiScope.launch {
             withContext(Dispatchers.IO){
+                sumTaskDuration()
+
                 val key = database.insert(task)
-                // Log.d("Life", subtasks.toString())
-                subtasks.forEach { it ->
-                    it.taskId = key
-                    it.duration += it.duration
-                }
-                // Log.d("Life", "finish")
-                databaseSubtask.insert(subtasks)
-                if(!task.isConstant)
+
+                if(!task.isConstant) {
                     database.insertDatedTask(DoneTask(date = Calendar.getInstance().timeInMillis, taskId = key))
-                CommonClass.subtasks.clear()
+                }
+
+                relateSubtasksToTask(key)
+
+                databaseSubtask.insert(subtasks)
             }
+        }
+    }
+
+    private fun sumTaskDuration() {
+        subtasks.forEach {
+            task.duration += it.duration
+        }
+    }
+
+    private fun relateSubtasksToTask(taskKey: Long) {
+        subtasks.forEach {
+            it.taskId = taskKey
         }
     }
 }

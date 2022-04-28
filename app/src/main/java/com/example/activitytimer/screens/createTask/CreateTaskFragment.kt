@@ -1,6 +1,8 @@
 package com.example.activitytimer.screens.createTask
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +15,19 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.activitytimer.R
-import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
-import com.example.activitytimer.databinding.FragmentCreateTaskBinding
 import com.example.activitytimer.data.ITask
+import com.example.activitytimer.databinding.FragmentCreateTaskBinding
+import com.example.activitytimer.screens.createTask.viewModels.CreateTaskViewModel
 import com.example.activitytimer.screens.listScreens.TaskListAdapter
 import com.example.activitytimer.screens.listScreens.TaskListener
+import com.example.activitytimer.screens.timer.TimerService
+import com.example.activitytimer.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
@@ -29,7 +37,6 @@ class CreateTaskFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var adapter: TaskListAdapter
 
-    @OptIn(ExperimentalTime::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,11 +54,18 @@ class CreateTaskFragment : Fragment() {
 
         binding.buttonSave.setOnClickListener {
             if(viewModel.canBeSaved) {
+                Log.d("qwe", "here")
                 viewModel.saveToDatabase()
                 navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
 
+                Log.d("qwe", CreateTaskFragmentArgs.fromBundle(requireArguments()).isTracked.toString())
+
                 if(viewModel.timeTracked) {
-                    navController.previousBackStackEntry?.viewModelStore?.clear()
+                    Log.d("qwe", "true")
+                    Intent(requireContext(), TimerService::class.java).also {
+                        it.action = Constants.ACTION_STOP_SERVICE
+                        requireContext().startService(it)
+                    }
                 }
 
                 navController.popBackStack()
@@ -69,9 +83,9 @@ class CreateTaskFragment : Fragment() {
         binding.editTextDuration.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
-                val hours = Duration.hours(bundle.getInt("hours"))
-                val minutes = Duration.minutes(bundle.getInt("minutes"))
-                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val hours = bundle.getInt("hours").hours
+                val minutes = bundle.getInt("minutes").minutes
+                val seconds = bundle.getInt("seconds").seconds
                 val duration = hours.plus(minutes).plus(seconds)
                 if(duration.inWholeSeconds > 0L) {
                     viewModel.task.duration = duration.inWholeSeconds
@@ -93,7 +107,6 @@ class CreateTaskFragment : Fragment() {
         updateView()
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun updateView() {
         adapter.submitList(viewModel.subtasks as List<ITask>?)
 
@@ -101,7 +114,11 @@ class CreateTaskFragment : Fragment() {
         binding.editTextDuration.visibility = when(viewModel.subtasks.isEmpty()) {
             true -> {
                 if(viewModel.task.duration > 0L)
-                    binding.editTextDuration.setText(Duration.seconds(viewModel.task.duration).toString())
+                    binding.editTextDuration.setText(viewModel.task.duration.seconds.toString())
+                else {
+                    binding.editTextDuration.setText(TimerService.timeRunInMillis.value?.milliseconds?.inWholeSeconds.toString())
+                    binding.editTextDuration.isClickable = false
+                }
                 View.VISIBLE
             }
             else -> View.GONE

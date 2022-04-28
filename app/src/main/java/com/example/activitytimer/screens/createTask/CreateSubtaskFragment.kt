@@ -10,9 +10,14 @@ import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.activitytimer.screens.createTask.viewModels.CreateSubtaskViewModel
 import com.example.activitytimer.databinding.FragmentCreateSubtaskBinding
+import com.example.activitytimer.screens.createTask.viewModels.CreateSubtaskViewModel
+import com.example.activitytimer.screens.timer.TimerService
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -29,27 +34,17 @@ class CreateSubtaskFragment : Fragment() {
         binding.viewModel = viewModel
 
         val navController = findNavController()
-        val trackedDuration = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration
-        val isTimeTracking: Boolean = trackedDuration != -1L
 
-        if(isTimeTracking) {
-            setupView()
-
-            binding.buttonLabelAllLater.setOnClickListener {
-                navController.previousBackStackEntry?.savedStateHandle?.set("labelAllLater", true)
-                navController.popBackStack()
-            }
-
-            binding.buttonLabelLater.setOnClickListener {
-                navController.popBackStack()
-            }
-
-            viewModel.subtask.duration = trackedDuration
-            binding.editTextTime.setText(Duration.seconds(trackedDuration).toString())
+        if(CreateSubtaskFragmentArgs.fromBundle(requireArguments()).isTracked) {
+            setupTrackedTimeView()
         }
 
         viewModel.subtaskSaved.observe(viewLifecycleOwner) { subtaskSaved ->
             if (subtaskSaved && readInput()) {
+
+                if (CreateSubtaskFragmentArgs.fromBundle(requireArguments()).isTracked) {
+                    TimerService.saveSubtask(viewModel.subtask)
+                }
                 navController.popBackStack()
             }
         }
@@ -57,9 +52,9 @@ class CreateSubtaskFragment : Fragment() {
         binding.editTextTime.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
-                val hours = Duration.hours(bundle.getInt("hours"))
-                val minutes = Duration.minutes(bundle.getInt("minutes"))
-                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val hours = bundle.getInt("hours").hours
+                val minutes = bundle.getInt("minutes").minutes
+                val seconds = bundle.getInt("seconds").seconds
                 val duration = hours.plus(minutes).plus(seconds)
                 if(duration.inWholeSeconds > 0L) {
                     viewModel.subtask.duration = duration.inWholeSeconds
@@ -72,9 +67,9 @@ class CreateSubtaskFragment : Fragment() {
         binding.editTextBreakInterval.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
-                val hours = Duration.hours(bundle.getInt("hours"))
-                val minutes = Duration.minutes(bundle.getInt("minutes"))
-                val seconds = Duration.seconds(bundle.getInt("seconds"))
+                val hours = bundle.getInt("hours").hours
+                val minutes = bundle.getInt("minutes").minutes
+                val seconds = bundle.getInt("seconds").seconds
                 val duration = hours.plus(minutes).plus(seconds)
                 if(duration.inWholeSeconds > 0) {
                     viewModel.subtask.duration = duration.inWholeSeconds
@@ -92,7 +87,7 @@ class CreateSubtaskFragment : Fragment() {
                 binding.editTextName.text.trim().isNotEmpty()
 
         if(allFieldsEntered) {
-            viewModel.subtask.name = binding.editTextTime.text.trim().toString()
+            viewModel.subtask.name = binding.editTextName.text.trim().toString()
             viewModel.subtask.playAutomatically = binding.creationChbAutomaticPlay.isChecked
             if(binding.editTextNumber.text.trim().isNotEmpty())
                 viewModel.subtask.count = binding.editTextNumber.text.toString().toInt()
@@ -103,10 +98,9 @@ class CreateSubtaskFragment : Fragment() {
         return false
     }
 
-    private fun setupView() {
-        binding.buttonLabelAllLater.visibility = View.VISIBLE
-        binding.buttonLabelLater.visibility = View.VISIBLE
-
-        viewModel.subtask.duration = CreateSubtaskFragmentArgs.fromBundle(requireArguments()).duration
+    private fun setupTrackedTimeView() {
+        viewModel.subtask.duration = TimerService.interval.milliseconds.inWholeSeconds
+        binding.editTextTime.setText(viewModel.subtask.duration.seconds.toString())
+        binding.editTextTime.isClickable = false
     }
 }

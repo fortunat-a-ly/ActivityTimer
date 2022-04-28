@@ -21,9 +21,9 @@
         android:label="Task">
 
         <argument
-            android:name="duration"
-            android:defaultValue="-1L"
-            app:argType="long" />
+            android:name="isTracked"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/CreateSubtaskFragment"
@@ -31,8 +31,8 @@
         android:label="Subtask">
 
         <argument
-            android:name="duration"
-            android:defaultValue="-1L"
-            app:argType="long" />
+            android:name="isTracked"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 </navigation>
