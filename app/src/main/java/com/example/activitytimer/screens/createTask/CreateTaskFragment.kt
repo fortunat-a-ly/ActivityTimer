@@ -115,10 +115,6 @@ class CreateTaskFragment : Fragment() {
             true -> {
                 if(viewModel.task.duration > 0L)
                     binding.editTextDuration.setText(viewModel.task.duration.seconds.toString())
-                else {
-                    binding.editTextDuration.setText(TimerService.timeRunInMillis.value?.milliseconds?.inWholeSeconds.toString())
-                    binding.editTextDuration.isClickable = false
-                }
                 View.VISIBLE
             }
             else -> View.GONE
