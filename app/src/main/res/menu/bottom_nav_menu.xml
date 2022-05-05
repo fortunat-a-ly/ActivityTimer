@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/nav_graph_tasks"
+        android:icon="@drawable/ic_menu_tasks"
         android:title="@string/tasks" />
 
     <item
         android:id="@+id/nav_graph_timer"
+        android:icon="@drawable/ic_menu_timer"
         android:title="@string/timer" />
 
     <item
         android:id="@+id/nav_graph_results"
+        android:icon="@drawable/ic_menu_progress"
         android:title="@string/results"/>
 
 </menu>
