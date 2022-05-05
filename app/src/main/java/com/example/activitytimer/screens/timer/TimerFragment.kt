@@ -11,9 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.databinding.FragmentTimerBinding
 import com.example.activitytimer.utils.Constants
-import java.util.concurrent.TimeUnit
+import com.example.activitytimer.utils.DurationString
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 class TimerFragment : Fragment() {
 
@@ -51,7 +50,7 @@ class TimerFragment : Fragment() {
 
 
         TimerService.timeRunInMillis.observe(viewLifecycleOwner) {
-            binding.txvTimer.text = TimeUnit.MILLISECONDS.toSeconds(it).seconds.toString()
+            binding.txvTimer.text = DurationString.fromMilliseconds(it)
         }
 
         return binding.root
@@ -59,7 +58,7 @@ class TimerFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.txvTimer.text = TimeUnit.MILLISECONDS.toSeconds(TimerService.timeRunInMillis.value!!).seconds.toString()
+        binding.txvTimer.text = DurationString.fromMilliseconds(TimerService.timeRunInMillis.value!!)
     }
 
     private fun startTimerService() {

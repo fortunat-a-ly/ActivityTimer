@@ -22,13 +22,8 @@ import com.example.activitytimer.screens.listScreens.TaskListAdapter
 import com.example.activitytimer.screens.listScreens.TaskListener
 import com.example.activitytimer.screens.timer.TimerService
 import com.example.activitytimer.utils.Constants
+import com.example.activitytimer.utils.DurationString
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
 class CreateTaskFragment : Fragment() {
@@ -83,13 +78,10 @@ class CreateTaskFragment : Fragment() {
         binding.editTextDuration.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
-                val hours = bundle.getInt("hours").hours
-                val minutes = bundle.getInt("minutes").minutes
-                val seconds = bundle.getInt("seconds").seconds
-                val duration = hours.plus(minutes).plus(seconds)
-                if(duration.inWholeSeconds > 0L) {
-                    viewModel.task.duration = duration.inWholeSeconds
-                    binding.editTextDuration.setText(duration.toString())
+                val durationSeconds = bundle.getLong("seconds")
+                if(durationSeconds > 0L) {
+                    viewModel.task.duration = durationSeconds
+                    binding.editTextDuration.setText(DurationString.fromSeconds(durationSeconds))
                 }
             }
             DurationPickerDialogFragment().show(parentFragmentManager, null)
@@ -114,7 +106,8 @@ class CreateTaskFragment : Fragment() {
         binding.editTextDuration.visibility = when(viewModel.subtasks.isEmpty()) {
             true -> {
                 if(viewModel.task.duration > 0L)
-                    binding.editTextDuration.setText(viewModel.task.duration.seconds.toString())
+                    binding.editTextDuration.setText(
+                        DurationString.fromSeconds(viewModel.task.duration))
                 View.VISIBLE
             }
             else -> View.GONE

@@ -11,6 +11,9 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.R
 import com.example.activitytimer.databinding.DialogDurationPickerBinding
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 class DurationPickerDialogFragment : DialogFragment() {
 
@@ -25,10 +28,12 @@ class DurationPickerDialogFragment : DialogFragment() {
                 .setView(binding.root)
                 .setPositiveButton(R.string.saveTask,
                     DialogInterface.OnClickListener { _, _ ->
+                        val hours = binding.hourPicker.value.hours
+                        val minutes = binding.minutePicker.value.minutes
+                        val seconds = binding.secondPicker.value.seconds
                         setFragmentResult("durationBundle",
-                            bundleOf("hours" to binding.hourPicker.value,
-                            "minutes" to binding.minutePicker.value,
-                            "seconds" to binding.secondPicker.value)
+                            bundleOf("seconds" to
+                                hours.plus(minutes).plus(seconds).inWholeSeconds)
                         )
                     })
                 .create()
