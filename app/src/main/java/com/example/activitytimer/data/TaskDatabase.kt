@@ -11,7 +11,7 @@ import com.example.activitytimer.data.task.Task
 import com.example.activitytimer.data.doneTasks.DoneTask
 import com.example.activitytimer.data.task.TaskDatabaseDao
 
-@Database(entities = [Task::class, Subtask::class, DoneTask::class], version = 2, exportSchema = false)
+@Database(entities = [Task::class, Subtask::class, DoneTask::class], version = 3, exportSchema = false)
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract val taskDatabaseDao: TaskDatabaseDao

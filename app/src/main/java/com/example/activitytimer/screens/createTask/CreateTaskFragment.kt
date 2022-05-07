@@ -51,14 +51,11 @@ class CreateTaskFragment : Fragment() {
 
         binding.buttonSave.setOnClickListener {
             if(viewModel.canBeSaved) {
-                Log.d("qwe", "here")
+                viewModel.task.category = Constants.categories.indexOf(binding.creationCategoryList.text.toString())
                 viewModel.saveToDatabase()
                 navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
 
-                Log.d("qwe", CreateTaskFragmentArgs.fromBundle(requireArguments()).isTracked.toString())
-
                 if(viewModel.timeTracked) {
-                    Log.d("qwe", "true")
                     Intent(requireContext(), TimerService::class.java).also {
                         it.action = Constants.ACTION_STOP_SERVICE
                         requireContext().startService(it)

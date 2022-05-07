@@ -16,4 +16,8 @@ object Constants {
     const val NOTIFICATION_TIMER_ID = 1
 
     const val TIMER_UPDATE_INTERVAL = 50L
+
+    val categories = listOf("Work", "Study", "Health", "Sport",
+        "Hobby", "Household chores", "Playing", "Other")
+    val CATEGORY_OTHER_INDEX: Int get() = categories.lastIndex
 }

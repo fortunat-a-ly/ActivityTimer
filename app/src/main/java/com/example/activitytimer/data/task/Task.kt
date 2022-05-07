@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.activitytimer.data.ITask
+import com.example.activitytimer.utils.Constants
+import com.example.activitytimer.utils.Constants.CATEGORY_OTHER_INDEX
 
 @Entity(tableName = "task_table")
 data class Task (
@@ -22,6 +24,9 @@ data class Task (
 
     @ColumnInfo(name = "is_constant")
     var isConstant: Boolean = true
+
+    @ColumnInfo(name = "category")
+    var category: Int = CATEGORY_OTHER_INDEX
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
