@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResultListener
@@ -70,11 +72,6 @@ class CreateTaskFragment : Fragment() {
             }
         }
 
-        binding.editTextCategory.setOnClickListener {
-            ChooseCategoryDialogFragment().show(requireFragmentManager(), "smth")
-            //startActivity(Intent(context, SearchableActivity::class.java))
-        }
-
         binding.editTextDuration.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
@@ -91,6 +88,10 @@ class CreateTaskFragment : Fragment() {
         binding.creationRcvSubtaskList.adapter = adapter
         binding.creationRcvSubtaskList.layoutManager = LinearLayoutManager(context)
 
+        val items = listOf("Work", "Study", "Health", "Sport", "Hobby", "Household chores", "Playing")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_category, items)
+        (binding.creationCategoryList as? AutoCompleteTextView)?.setAdapter(adapter)
+
         return binding.root
     }
 
@@ -103,7 +104,7 @@ class CreateTaskFragment : Fragment() {
         adapter.submitList(viewModel.subtasks as List<ITask>?)
 
         // you can enter task duration if u have no subtasks
-        binding.editTextDuration.visibility = when(viewModel.subtasks.isEmpty()) {
+        binding.textInputDuration.visibility = when(viewModel.subtasks.isEmpty()) {
             true -> {
                 if(viewModel.task.duration > 0L)
                     binding.editTextDuration.setText(

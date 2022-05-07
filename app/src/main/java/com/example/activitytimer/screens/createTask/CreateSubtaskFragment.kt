@@ -46,13 +46,13 @@ class CreateSubtaskFragment : Fragment() {
             }
         }
 
-        binding.editTextTime.setOnClickListener {
+        binding.editTextDuration.setOnClickListener {
             clearFragmentResultListener("durationBundle")
             setFragmentResultListener("durationBundle") { _, bundle ->
                 val durationSeconds = bundle.getLong("seconds")
                 if(durationSeconds > 0L) {
                     viewModel.subtask.duration = durationSeconds
-                    binding.editTextTime.setText(DurationString.fromSeconds(durationSeconds))
+                    binding.editTextDuration.setText(DurationString.fromSeconds(durationSeconds))
                 }
             }
             DurationPickerDialogFragment().show(parentFragmentManager, null)
@@ -74,13 +74,13 @@ class CreateSubtaskFragment : Fragment() {
     }
 
     private fun readInput() : Boolean {
-        val allFieldsEntered = binding.editTextTime.text.trim().isNotEmpty() &&
-                binding.editTextName.text.trim().isNotEmpty()
+        val allFieldsEntered = binding.editTextDuration.text?.trim()?.isNotEmpty() ?: false &&
+                binding.editTextName.text?.trim()?.isNotEmpty() ?: false
 
         if(allFieldsEntered) {
-            viewModel.subtask.name = binding.editTextName.text.trim().toString()
+            viewModel.subtask.name = binding.editTextName.text?.trim().toString()
             viewModel.subtask.playAutomatically = binding.creationChbAutomaticPlay.isChecked
-            if(binding.editTextNumber.text.trim().isNotEmpty())
+            if(binding.editTextNumber.text?.trim()?.isNotEmpty() == true)
                 viewModel.subtask.count = binding.editTextNumber.text.toString().toInt()
             return true
         }
@@ -91,8 +91,8 @@ class CreateSubtaskFragment : Fragment() {
 
     private fun setupTrackedTimeView() {
         viewModel.subtask.duration = TimerService.interval.milliseconds.inWholeSeconds
-        binding.editTextTime.setText(
+        binding.editTextDuration.setText(
             DurationString.fromSeconds(viewModel.subtask.duration))
-        binding.editTextTime.isClickable = false
+        binding.editTextDuration.isClickable = false
     }
 }

@@ -17,12 +17,10 @@
     <string name="skip">Skip</string>
     <string name="pause">Pause</string>
     <string name="duration">Duration</string>
-    <string name="number_of_times">Number of times</string>
     <string name="create_task">Create Task</string>
     <string name="well_done">Well Done!</string>
     <string name="reps_count_of_all">%d / %d</string>
     <string name="automatic_play">Automatic Play</string>
-    <string name="before_break_interval">Before Break Interval</string>
     <string name="category">Category</string>
     <string name="add_category">Add category</string>
     <string name="to_subtask">Subtask it</string>
@@ -38,4 +36,7 @@
     <string name="tasks">Tasks</string>
     <string name="timer">Timer</string>
     <string name="results">Results</string>
+    <string name="subtask">Subtask</string>
+    <string name="break_before_subtask">Break Before Subtask</string>
+    <string name="number_of_repetitions">Number of repetitions</string>
 </resources>
