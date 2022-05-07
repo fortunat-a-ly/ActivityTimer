@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
 class TimerService : LifecycleService() {
@@ -100,19 +99,18 @@ class TimerService : LifecycleService() {
                     pauseService()
                 }
                 ACTION_STOP_SERVICE -> {
-                    Log.d("qwe", "stop")
                     stopService()
                 }
                 ACTION_TRACK_INTERVAL -> {
                     trackInterval()
                 }
                 else -> {
-                    Log.d("qwe", "start")
                     if (isFirstRun) {
                         startForegroundService()
                         isFirstRun = false
                     } else {
-                        startTimer()
+                        if(!isTracking.value!!)
+                            startTimer()
                     }
                 }
             }
@@ -199,7 +197,6 @@ class TimerService : LifecycleService() {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun startForegroundService() {
         startTimer()
         isTracking.postValue(true)
