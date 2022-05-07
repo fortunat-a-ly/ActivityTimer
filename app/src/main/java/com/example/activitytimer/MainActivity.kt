@@ -34,7 +34,13 @@ class MainActivity : AppCompatActivity() {
         // Setup the bottom navigation view with navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.TaskListFragment,
+                R.id.timerFragment,
+                R.id.DoneTasksList
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
