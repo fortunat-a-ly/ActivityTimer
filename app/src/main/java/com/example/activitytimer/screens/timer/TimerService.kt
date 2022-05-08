@@ -8,7 +8,6 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
@@ -59,9 +58,8 @@ class TimerService : LifecycleService() {
         val interval: Long get() = timeRunInMillis.value?.minus(timeTrackedInMillis)!!
 
         fun saveSubtask(subtask: Subtask) {
-            val smth: Long = timeRunInMillis.value?.minus(timeTrackedInMillis)!!
-            subtask.duration = smth.milliseconds.inWholeSeconds
-            timeTrackedInMillis += smth
+            subtask.duration = interval.milliseconds.inWholeSeconds
+            timeTrackedInMillis += interval
 
             trackedSubtasks.add(subtask)
         }
@@ -81,18 +79,11 @@ class TimerService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
 
-        Log.d("SER1", "onCreate")
-
         curNotificationBuilder = baseNotificationBuilder
         postInitialValues()
-
-        isTracking.observe(this) {
-            updateNotificationTrackingState(it)
-        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("SER1", "onStart")
         intent?.let {
             when (it.action) {
                 ACTION_PAUSE_SERVICE -> {
@@ -142,11 +133,15 @@ class TimerService : LifecycleService() {
             }
             timeRun += lapTime
         }
+
+        updateNotificationTrackingState(true)
     }
 
     private fun pauseService() {
         isTracking.postValue(false)
         isTimerEnabled = false
+        if(!isFirstRun)
+            updateNotificationTrackingState(false)
     }
 
     private fun stopService() {
