@@ -36,16 +36,20 @@ class TimerFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
-            if(TimerService.interval.milliseconds.inWholeSeconds > 0L && TimerService.trackedSubtasks.isNotEmpty())
-                navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
-            else
-                navController.navigate(TimerFragmentDirections.actionTimerToCreateTask(true))
+            if(TimerService.timeRunInMillis.value!!.milliseconds.inWholeSeconds > 0L) {
+                sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
+                if(TimerService.trackedSubtasks.isNotEmpty())
+                    navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
+                else
+                    navController.navigate(TimerFragmentDirections.actionTimerToCreateTask(true))
+            }
         }
 
         binding.buttonSubtask.setOnClickListener {
-            sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
-            navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
+            if(TimerService.interval.milliseconds.inWholeSeconds > 0L) {
+                sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
+                navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
+            }
         }
 
 
