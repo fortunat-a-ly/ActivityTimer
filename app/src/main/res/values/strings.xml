@@ -11,7 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="saveTask">Save</string>
     <string name="taskName">Task</string>
-    <string name="create_subtask">create</string>
+    <string name="create_subtask">Create Subtask</string>
     <string name="task">Task</string>
     <string name="start">Start</string>
     <string name="skip">Skip</string>
