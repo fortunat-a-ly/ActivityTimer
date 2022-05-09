@@ -34,7 +34,7 @@ class CreateTaskViewModel @Inject constructor(
 
     val subtasks: List<Subtask> = if(timeTracked) TimerService.trackedSubtasks else CommonClass.subtasks
 
-    val canBeSaved: Boolean get() = subtasks.isNotEmpty() || task.duration > 0L
+    val canBeSaved: Boolean get() = (subtasks.isNotEmpty() || task.duration > 0L) && task.name.trim().isNotEmpty()
 
     override fun onCleared() {
         super.onCleared()
