@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.R
 import com.example.activitytimer.databinding.FragmentTaskExecutionBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class TaskExecutionFragment : Fragment() {
@@ -30,13 +31,30 @@ class TaskExecutionFragment : Fragment() {
         viewModel.currentSubtask.observe(viewLifecycleOwner) {
             it?.let{
                 binding.taskTxvName.text = it.name
+                adaptFontSize(it.duration.seconds.toString().length)
+                binding.executionProgressBarTimer.max = it.duration.toInt()
+                binding.executionProgressBarTimer.progress =
+                    viewModel.durationInSeconds.value!!.toInt()
                 // binding.taskTxvSetsNumber.text = resources.getString(R.string.reps_count_of_all, viewModel.subtaskRepCount, it.count)
             }
+        }
+
+        viewModel.durationInSeconds.observe(viewLifecycleOwner) {
+            binding.executionProgressBarTimer.progress = it.toInt()
+            adaptFontSize(it.seconds.toString().length)
         }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
+    }
+
+    private fun adaptFontSize(textLength: Int) {
+        when {
+            textLength < 4f -> binding.taskTxvTime.textSize = 50f
+            textLength < 7f -> binding.taskTxvTime.textSize = 40f
+            else -> binding.taskTxvTime.textSize = 360f / textLength
+        }
     }
 }

@@ -70,10 +70,18 @@ class TaskExecutionViewModel @Inject constructor(
     }
 
     private fun initializeBreakTimer() {
-        updateDuration(_currentSubtask.value?.breakInterval)
-        timer = CountDownSecondsTimerWithState(durationInSeconds.value ?: 0,
+        timer = if(currentSubtask.value!!.breakInterval > 0L) {
+            updateDuration(_currentSubtask.value?.breakInterval)
+            CountDownSecondsTimerWithState(durationInSeconds.value ?: 0,
                 ::updateDuration,
                 ::startSubtaskTimer)
+        } else {
+            updateDuration(_currentSubtask.value?.duration)
+            CountDownSecondsTimerWithState(
+                durationInSeconds.value  ?: 0,
+                ::updateDuration,
+                ::subtaskRepFinished)
+        }
     }
 
     private fun startSubtaskExecution() {
@@ -85,11 +93,7 @@ class TaskExecutionViewModel @Inject constructor(
     }
 
     private fun startSubtaskTimer() {
-        updateDuration(_currentSubtask.value?.duration)
-        timer = CountDownSecondsTimerWithState(
-            durationInSeconds.value  ?: 0,
-            ::updateDuration,
-            ::subtaskRepFinished).start()
+        timer?.start()
     }
 
     private fun resumeTaskExecution() {

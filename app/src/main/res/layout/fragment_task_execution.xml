@@ -24,14 +24,28 @@
             android:layout_marginBottom="56dp"
             tools:text="Pull Ups"/>
 
-        <TextView
-            android:id="@+id/task_txv_time"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:textSize="50sp"
-            android:gravity="center"
-            android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"
-            tools:text="15:30" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/execution_progressBar_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:trackThickness="10dp"
+                app:indicatorSize="250dp"/>
+
+            <TextView
+                android:id="@+id/task_txv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="50sp"
+                android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"
+                tools:text="15:30" />
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/task_txv_sets_number"
