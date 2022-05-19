@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <service android:name=".screens.timer.TimerService"/>
+        <service android:name=".screens.taskExecution.CountDownTimerService"/>
     </application>
 
 </manifest>

@@ -18,10 +18,11 @@ import com.example.activitytimer.utils.Constants.ACTION_PAUSE_SERVICE
 import com.example.activitytimer.utils.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.activitytimer.utils.Constants.ACTION_STOP_SERVICE
 import com.example.activitytimer.utils.Constants.ACTION_TRACK_INTERVAL
-import com.example.activitytimer.utils.Constants.NOTIFICATION_TIMER_ID
 import com.example.activitytimer.utils.Constants.NOTIFICATION_TRACKING_CHANNEL_ID
 import com.example.activitytimer.utils.Constants.NOTIFICATION_TRACKING_CHANNEL_NAME
+import com.example.activitytimer.utils.Constants.NOTIFICATION_TRACKING_TIMER_ID
 import com.example.activitytimer.utils.Constants.TIMER_UPDATE_INTERVAL
+import com.example.activitytimer.utils.TrackTimerNotificationBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,8 +41,8 @@ class TimerService : LifecycleService() {
 
     private var serviceKilled = false
 
-    @Inject
-    lateinit var baseNotificationBuilder: NotificationCompat.Builder
+    @TrackTimerNotificationBuilder
+    @Inject lateinit var baseNotificationBuilder: NotificationCompat.Builder
 
     lateinit var curNotificationBuilder: NotificationCompat.Builder
 
@@ -188,7 +189,7 @@ class TimerService : LifecycleService() {
         if(!serviceKilled) {
             curNotificationBuilder = baseNotificationBuilder
                 .addAction(R.drawable.ic_launcher_background, notificationActionText, pendingIntent)
-            notificationManager.notify(NOTIFICATION_TIMER_ID, curNotificationBuilder.build())
+            notificationManager.notify(NOTIFICATION_TRACKING_TIMER_ID, curNotificationBuilder.build())
         }
     }
 
@@ -203,13 +204,13 @@ class TimerService : LifecycleService() {
             createNotificationChannel(notificationManager)
         }
 
-        startForeground(NOTIFICATION_TIMER_ID, baseNotificationBuilder.build())
+        startForeground(NOTIFICATION_TRACKING_TIMER_ID, baseNotificationBuilder.build())
 
         timeRunInSeconds.observe(this) {
             if(!serviceKilled) {
                 val notification = curNotificationBuilder
                     .setContentText(it.seconds.toString())
-                notificationManager.notify(NOTIFICATION_TIMER_ID, notification.build())
+                notificationManager.notify(NOTIFICATION_TRACKING_TIMER_ID, notification.build())
             }
         }
     }

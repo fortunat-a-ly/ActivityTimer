@@ -71,7 +71,6 @@
                 android:layout_weight="1"
                 android:layout_margin="20dp"
                 android:paddingVertical="20dp"
-                android:onClick="@{() -> viewModel.onPlay()}"
                 tools:text="@string/start"
                 app:text="@{viewModel.canBePaused}" />
 
@@ -82,7 +81,6 @@
                 android:layout_weight="1"
                 android:layout_margin="20dp"
                 android:paddingVertical="20dp"
-                android:onClick="@{() -> viewModel.onSkip()}"
                 android:text="@string/skip" />
         </LinearLayout>
 
