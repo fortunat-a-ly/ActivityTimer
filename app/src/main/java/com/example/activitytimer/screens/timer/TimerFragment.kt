@@ -38,18 +38,15 @@ class TimerFragment : Fragment() {
         binding.buttonSave.setOnClickListener {
             if(TimerService.timeRunInMillis.value!!.milliseconds.inWholeSeconds > 0L) {
                 sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
-                if(TimerService.trackedSubtasks.isNotEmpty())
-                    navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
+                if(TimerService.trackedSubtasks.isNotEmpty() && TimerService.interval.milliseconds.inWholeSeconds > 0L)
+                    trackSubtask()
                 else
                     navController.navigate(TimerFragmentDirections.actionTimerToCreateTask(true))
             }
         }
 
         binding.buttonSubtask.setOnClickListener {
-            if(TimerService.interval.milliseconds.inWholeSeconds > 0L) {
-                sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
-                navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
-            }
+            trackSubtask()
         }
 
         TimerService.isTracking.observe(viewLifecycleOwner) {
@@ -61,6 +58,13 @@ class TimerFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun trackSubtask() {
+        if (TimerService.interval.milliseconds.inWholeSeconds > 0L) {
+            sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
+            navController.navigate(TimerFragmentDirections.actionTimerToCreateSubtask(true))
+        }
     }
 
     override fun onResume() {
