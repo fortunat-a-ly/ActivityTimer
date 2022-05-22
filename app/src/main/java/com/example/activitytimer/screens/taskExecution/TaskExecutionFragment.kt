@@ -12,6 +12,7 @@ import com.example.activitytimer.R
 import com.example.activitytimer.databinding.FragmentTaskExecutionBinding
 import com.example.activitytimer.utils.Constants
 import com.example.activitytimer.utils.Constants.ACTION_STOP_SERVICE
+import com.example.activitytimer.utils.Constants.ACTION_STOP_SERVICE_BEFOREHAND
 import com.example.activitytimer.utils.timer.CountDownSecondsTimerWithState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.time.Duration.Companion.seconds
@@ -57,6 +58,10 @@ class TaskExecutionFragment : Fragment() {
 
         binding.taskBtnSkip.setOnClickListener {
             sendCommandToService(Constants.ACTION_TASK_TIMER_SKIP)
+        }
+
+        binding.taskBtnFinish.setOnClickListener{
+            sendCommandToService(ACTION_STOP_SERVICE_BEFOREHAND)
         }
 
         viewModel.durationInSeconds.observe(viewLifecycleOwner) {

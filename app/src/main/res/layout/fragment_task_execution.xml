@@ -58,31 +58,52 @@
             android:text="@{@string/reps_count_of_all(viewModel.subtaskRepCount, viewModel.currentSubtask.count)}"
             tools:text="2/3" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
+                android:id="@+id/task_btn_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:background="@drawable/btn_circle_background"
+                android:src="@drawable/ic_finish_task"
+                android:contentDescription="@string/finish_task"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/task_btn_start"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
                 android:id="@+id/task_btn_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="20dp"
-                android:paddingVertical="20dp"
-                tools:text="@string/start"
-                app:text="@{viewModel.canBePaused}" />
+                android:padding="20dp"
+                android:background="@drawable/btn_circle_background"
+                app:icon="@{viewModel.canBePaused}"
+                android:contentDescription="@string/start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_execute_task" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/task_btn_skip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="20dp"
-                android:paddingVertical="20dp"
-                android:text="@string/skip" />
-        </LinearLayout>
+                android:padding="15dp"
+                android:contentDescription="@string/skip"
+                android:background="@drawable/btn_circle_background"
+                android:src="@drawable/ic_skip"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/task_btn_start"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </layout>

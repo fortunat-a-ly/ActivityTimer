@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.databinding.FragmentTimerBinding
 import com.example.activitytimer.utils.Constants
 import com.example.activitytimer.utils.DurationString
+import com.example.activitytimer.utils.setIcon
 import kotlin.time.Duration.Companion.milliseconds
 
 class TimerFragment : Fragment() {
@@ -28,11 +29,10 @@ class TimerFragment : Fragment() {
         navController = findNavController()
 
         binding.buttonStart.setOnClickListener {
-            startTimerService()
-        }
-
-        binding.buttonPause.setOnClickListener {
-            sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
+            if(TimerService.isTracking.value!!)
+                sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
+            else
+                startTimerService()
         }
 
         binding.buttonSave.setOnClickListener {
@@ -52,6 +52,9 @@ class TimerFragment : Fragment() {
             }
         }
 
+        TimerService.isTracking.observe(viewLifecycleOwner) {
+            binding.buttonStart.setIcon(TimerService.isTracking.value!!)
+        }
 
         TimerService.timeRunInMillis.observe(viewLifecycleOwner) {
             binding.txvTimer.text = DurationString.fromMilliseconds(it)
