@@ -8,7 +8,7 @@
         <import type="com.example.activitytimer.utils.DurationString"/>
         <variable
             name="viewModel"
-            type="com.example.activitytimer.screens.taskExecution.TaskExecutionViewModel" />
+            type="com.example.activitytimer.screens.taskExecution.CountDownTimerService.LocalBinder" />
     </data>
 
     <LinearLayout
@@ -43,8 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 tools:textSize="50sp"
-                android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"
-                tools:text="15:30" />
+                tools:text="15:30"
+                android:text="@{DurationString.INSTANCE.fromSeconds(viewModel.durationInSeconds)}"/>
         </FrameLayout>
 
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:background="@drawable/btn_circle_background"
-                app:icon="@{viewModel.canBePaused}"
+                app:icon="@{viewModel.state.canBePaused}"
                 android:contentDescription="@string/start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

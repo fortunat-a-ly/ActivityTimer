@@ -32,10 +32,10 @@ class SubtaskListFragment : Fragment() {
         binding.list.fab.setImageResource(R.drawable.ic_execute_task)
 
         binding.list.fab.setOnClickListener{
-            if(CountDownTimerService.taskExecuting && CountDownTimerService.taskId != viewModel.taskId)
+/*            if(CountDownTimerService.taskExecuting && CountDownTimerService.taskId != viewModel.taskId)
                 Toast.makeText(context, "You have another task in progress", Toast.LENGTH_LONG)
                     .show()
-            else
+            else*/
                 findNavController().navigate(
                     SubtaskListFragmentDirections.actionSubtaskListToTaskExecution(viewModel.taskId))
         }

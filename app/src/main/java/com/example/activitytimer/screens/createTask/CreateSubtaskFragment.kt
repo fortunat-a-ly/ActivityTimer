@@ -63,7 +63,7 @@ class CreateSubtaskFragment : Fragment() {
             setFragmentResultListener("durationBundle") { _, bundle ->
                 val durationSeconds = bundle.getLong("seconds")
                 if(durationSeconds > 0) {
-                    viewModel.subtask.duration = durationSeconds
+                    viewModel.subtask.breakInterval = durationSeconds
                     binding.editTextBreakInterval.setText(DurationString.fromSeconds(durationSeconds))
                 }
             }

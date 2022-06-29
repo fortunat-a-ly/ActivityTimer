@@ -39,6 +39,7 @@ class CountDownSecondsTimerWithState(
         if(_state == TimerState.PAUSED) {
             start(INSTANCE.secondsLeft)
         }
+        else start()
         return this
     }
 
