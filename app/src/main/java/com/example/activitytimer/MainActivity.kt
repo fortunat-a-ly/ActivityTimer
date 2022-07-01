@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         ) as NavHostFragment
         navController = navHostFragment.navController
 
-        setSupportActionBar(binding.toolbar)
-
         // Setup the bottom navigation view with navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
@@ -43,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.DoneTasksList
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
         navigateToTrackingFragmentIfNeeded(intent)
     }

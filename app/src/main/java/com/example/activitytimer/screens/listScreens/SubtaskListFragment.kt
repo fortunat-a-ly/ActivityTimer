@@ -17,6 +17,7 @@ import com.example.activitytimer.data.ITask
 import com.example.activitytimer.databinding.FragmentSubtaskListBinding
 import com.example.activitytimer.screens.taskExecution.CountDownTimerService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class SubtaskListFragment : Fragment() {
@@ -59,9 +60,7 @@ class SubtaskListFragment : Fragment() {
         viewModel.task.observe(viewLifecycleOwner) {
             it?.let {
                 binding.listTxvName.text = it.name
-                binding.listTxvDuration.text = it.duration.toString()
-                binding.listTxvDurationDistribution.text = getString(R.string.duration_distribution, it.duration, it.duration)
-                // TODO("above formatted duration")
+                binding.listTxvDuration.text = it.duration.seconds.toString()
             }
         }
 

@@ -9,119 +9,124 @@
             type="com.example.activitytimer.screens.createTask.viewModels.CreateSubtaskViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginVertical="6dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/ic_menu_tasks">
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextName"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@={viewModel.subtask.name}"
-                android:inputType="text"
-                android:hint="@string/subtask" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginVertical="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_menu_tasks">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginVertical="6dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/ic_menu_timer">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@={viewModel.subtask.name}"
+                    android:inputType="text"
+                    android:hint="@string/subtask" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextDuration"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/duration"
-                android:inputType="text" />
+                android:layout_marginVertical="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_menu_timer">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/duration"
+                    android:inputType="text" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginVertical="6dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/ic_creation_reps">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextNumber"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/number_of_repetitions"
-                android:inputType="number" />
+                android:layout_marginVertical="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_creation_reps">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/number_of_repetitions"
+                    android:inputType="number" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/creation_chb_automatic_play"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="15dp"
-            android:text="@string/automatic_play"
-            app:useMaterialThemeColors="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginVertical="6dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/ic_creation_subtask_break">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextBreakInterval"
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/creation_chb_automatic_play"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/break_before_subtask"
-                android:inputType="text" />
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="15dp"
+                android:text="@string/automatic_play"
+                app:useMaterialThemeColors="true"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginVertical="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_creation_subtask_break">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="386dp"
-            android:layout_height="82dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/saveTask"
-            android:onClick="@{() -> viewModel.addSubtask()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBreakInterval"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/break_before_subtask"
+                    android:inputType="text" />
 
-        <Button
-            android:id="@+id/button_label_later"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_later"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/button_label_all_later"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_all_later"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="386dp"
+                android:layout_height="82dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/saveTask"
+                android:onClick="@{() -> viewModel.addSubtask()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button_label_later"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_later"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <Button
+                android:id="@+id/button_label_all_later"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_all_later"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </LinearLayout>
+    </ScrollView>
 </layout>

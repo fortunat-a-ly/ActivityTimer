@@ -10,39 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:background="#cfbaf0">
+        android:background="@color/light_green">
 
         <TextView
             android:id="@+id/list_txv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:textSize="30sp"
-            tools:text="Name"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/list_txv_duration_distribution"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textSize="14sp"
-            tools:text="14 min active task execution \n 10 min breaks"
-            app:layout_constraintTop_toBottomOf="@id/list_txv_name"
-            app:layout_constraintStart_toStartOf="parent"/>
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/list_txv_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:textSize="28sp"
-            tools:text="24:00"
-            app:layout_constraintTop_toTopOf="@id/list_txv_duration_distribution"
-            app:layout_constraintBottom_toBottomOf="@+id/list_txv_duration_distribution"
-            app:layout_constraintStart_toEndOf="@id/list_txv_duration_distribution"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="24:00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
