@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.activitytimer.data.DatedTask
 import com.example.activitytimer.utils.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,18 +83,22 @@ class DoneTaskList : Fragment() {
         )
     }
 
+    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun Task(task: DatedTask) {
         Card(
+            onClick = {
+                findNavController().navigate(DoneTaskListDirections.actionTaskListToSubtaskList(task.task.id))
+            },
             shape = RoundedCornerShape(15.dp), elevation = 7.dp, modifier = Modifier
                 .padding(15.dp, 7.dp),
             border = BorderStroke(1.dp, MaterialTheme.colors.primary)
-        ) {
-            Row(modifier = Modifier
-                .padding(all = 20.dp)) {
-                Text(task.task.name, Modifier.weight(1f))
-                Text(task.task.duration.seconds.toString())
+                ) {
+                Row(modifier = Modifier
+                    .padding(all = 20.dp)) {
+                    Text(task.task.name, Modifier.weight(1f))
+                    Text(task.task.duration.seconds.toString())
+                }
             }
-        }
     }
 }

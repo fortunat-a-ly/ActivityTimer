@@ -7,6 +7,21 @@
     <fragment
         android:id="@+id/DoneTasksList"
         android:name="com.example.activitytimer.screens.doneTasks.DoneTaskList"
-        android:label="Your results"/>
+        android:label="Your results">
+
+        <action
+            android:id="@+id/action_TaskList_to_SubtaskList"
+            app:destination="@id/SubtaskListFragment" >
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/SubtaskListFragment"
+        android:name="com.example.activitytimer.screens.listScreens.DoneSubtaskListFragment">
+
+        <argument
+            android:name="taskId"
+            app:argType="long"/>
+    </fragment>
 
 </navigation>

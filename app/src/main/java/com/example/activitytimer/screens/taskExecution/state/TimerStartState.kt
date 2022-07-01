@@ -8,6 +8,7 @@ class TimerStartState(newStateOwner: CountDownTimerService.LocalBinder) : TimerS
 
     override fun play() {
         stateOwner.timer?.start()
+        stateOwner.startTask()
         stateOwner._state.value = stateOwner.runningState
     }
 

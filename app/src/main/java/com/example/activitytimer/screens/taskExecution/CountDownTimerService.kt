@@ -47,21 +47,22 @@ class CountDownTimerService : LifecycleService() {
     override fun onBind(intent: Intent): IBinder {
         super.onBind(intent)
 
-        //startForeground(Constants.NOTIFICATION_TASK_TIMER_ID, baseNotificationBuilder.build())
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
 
-        taskId = intent.getLongExtra("taskId", -1L)
-        binder.loadData()
+        if (binder.state.value == binder.startState) {
+            taskId = intent.getLongExtra("taskId", -1L)
+            binder.loadData()
+        }
+
 /*        taskSession = TaskSession(subtasksDao, taskDao, binder,
             notificationManager, taskId)*/
         return binder
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        if(binder.state == binder.startState)
+        if(binder.state.value == binder.startState)
             binder.finishTask()
         return super.onUnbind(intent)
     }
@@ -131,6 +132,10 @@ class CountDownTimerService : LifecycleService() {
                 setSubtask()
                 initializeTimer()
             }
+        }
+
+        fun startTask() {
+            startForeground(Constants.NOTIFICATION_TASK_TIMER_ID, baseNotificationBuilder.build())
         }
 
         fun finishTask() {

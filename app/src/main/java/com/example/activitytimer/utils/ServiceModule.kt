@@ -69,7 +69,7 @@ object ServiceModule {
             .setAutoCancel(false)
             .setOngoing(true)
             .setContentTitle("Task")
-            .setContentText("00:00:00")
+            .setContentText("In progress")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
     }

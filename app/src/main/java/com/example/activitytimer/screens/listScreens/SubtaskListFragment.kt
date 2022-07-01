@@ -20,9 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
-class SubtaskListFragment : Fragment() {
-    private lateinit var binding: FragmentSubtaskListBinding
-    private val viewModel: SubtaskListViewModel by viewModels()
+open class SubtaskListFragment : Fragment() {
+    protected lateinit var binding: FragmentSubtaskListBinding
+    protected val viewModel: SubtaskListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

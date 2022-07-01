@@ -21,11 +21,13 @@ class TaskExecutionFragment : Fragment() {
     private lateinit var binding: FragmentTaskExecutionBinding
     private lateinit var binder: CountDownTimerService.LocalBinder
     private lateinit var mService: CountDownTimerService
+    private var mBound: Boolean = false
 
     private val connection = object : ServiceConnection {
 
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             // We've bound to Service, cast the IBinder and get Service instance
+            mBound = true
             binder = service as CountDownTimerService.LocalBinder
             mService = binder.getService()
 
@@ -47,6 +49,7 @@ class TaskExecutionFragment : Fragment() {
         intent = Intent(requireContext(), CountDownTimerService::class.java).also { intent ->
             intent.putExtra("taskId",
                 TaskExecutionFragmentArgs.fromBundle(requireArguments()).taskId)
+            requireContext().startService(intent)
             requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
 
@@ -112,7 +115,9 @@ class TaskExecutionFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        requireContext().unbindService(connection)
+        if (mBound) {
+            requireContext().unbindService(connection)
+        }
     }
 
 }
