@@ -15,6 +15,6 @@ object Constants {
     const val TIMER_UPDATE_INTERVAL = 50L
 
     val categories = listOf("Work", "Study", "Health", "Sport",
-        "Hobby", "Household chores", "Playing", "Other")
+        "Hobby", "Chores", "Entertainment", "Other")
     val CATEGORY_OTHER_INDEX: Int get() = categories.lastIndex
 }

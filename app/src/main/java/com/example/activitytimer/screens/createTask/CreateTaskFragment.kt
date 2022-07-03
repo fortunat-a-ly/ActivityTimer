@@ -51,7 +51,9 @@ class CreateTaskFragment : Fragment() {
 
         binding.buttonSave.setOnClickListener {
             if(viewModel.canBeSaved) {
-                viewModel.task.category = Constants.categories.indexOf(binding.creationCategoryList.text.toString())
+                val category = binding.creationCategoryList.text.toString()
+                if(category.isNotEmpty())
+                    viewModel.task.category = Constants.categories.indexOf(category)
                 viewModel.saveToDatabase()
                 navController.previousBackStackEntry?.savedStateHandle?.set("taskSaved", true)
 
@@ -85,8 +87,7 @@ class CreateTaskFragment : Fragment() {
         binding.creationRcvSubtaskList.adapter = adapter
         binding.creationRcvSubtaskList.layoutManager = LinearLayoutManager(context)
 
-        val items = listOf("Work", "Study", "Health", "Sport", "Hobby", "Household chores", "Playing")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_category, items)
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_category, Constants.categories)
         (binding.creationCategoryList as? AutoCompleteTextView)?.setAdapter(adapter)
 
         return binding.root

@@ -11,6 +11,7 @@
             name="taskListener"
             type="com.example.activitytimer.screens.listScreens.TaskListener" />
         <import type="com.example.activitytimer.utils.DurationString"/>
+        <import type="com.example.activitytimer.utils.Constants"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,30 +21,50 @@
         app:cardElevation="7dp"
         app:cardPreventCornerOverlap="true"
         android:clickable="true"
+        android:onClick="@{() -> taskListener.onClick(task)}"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="7dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="15dp"
-            android:onClick="@{() -> taskListener.onClick(task)}">
+            android:layout_height="match_parent"
+            android:padding="15dp">
 
             <TextView
+                android:id="@+id/txv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="25sp"
                 android:text="@{task.name}"
-                tools:text="Pull Ups Beginner"/>
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/txv_duration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pull Ups Beginner" />
 
             <TextView
+                android:id="@+id/txv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@{DurationString.INSTANCE.fromSeconds(task.duration)}"/>
+                android:maxLines="1"
+                android:paddingTop="5dp"
+                android:text="@{Constants.INSTANCE.categories[task.category]}"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv_name"
+                tools:text="Category" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/txv_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@{DurationString.INSTANCE.fromSeconds(task.duration)}"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/txv_category"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txv_name"
+                tools:text="0m2s" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
