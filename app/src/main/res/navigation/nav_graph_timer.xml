@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.example.activitytimer.screens.timer.TimerFragment"
+        android:name="com.fortunately.timepass.screens.timer.TimerFragment"
         android:label="TimerFragment" >
         <action
             android:id="@+id/action_Timer_to_CreateTask"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/CreateTaskFragment"
-        android:name="com.example.activitytimer.screens.createTask.CreateTaskFragment"
+        android:name="com.fortunately.timepass.screens.createTask.CreateTaskFragment"
         android:label="Task">
 
         <argument
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/CreateSubtaskFragment"
-        android:name="com.example.activitytimer.screens.createTask.CreateSubtaskFragment"
+        android:name="com.fortunately.timepass.screens.createTask.CreateSubtaskFragment"
         android:label="Subtask">
 
         <argument

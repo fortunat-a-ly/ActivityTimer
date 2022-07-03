@@ -6,12 +6,12 @@
     <data>
         <variable
             name="task"
-            type="com.example.activitytimer.data.task.Task" />
+            type="com.fortunately.timepass.data.task.Task" />
         <variable
             name="taskListener"
-            type="com.example.activitytimer.screens.listScreens.TaskListener" />
-        <import type="com.example.activitytimer.utils.DurationString"/>
-        <import type="com.example.activitytimer.utils.Constants"/>
+            type="com.fortunately.timepass.screens.listScreens.TaskListener" />
+        <import type="com.fortunately.timepass.utils.DurationString"/>
+        <import type="com.fortunately.timepass.utils.Constants"/>
     </data>
 
     <androidx.cardview.widget.CardView

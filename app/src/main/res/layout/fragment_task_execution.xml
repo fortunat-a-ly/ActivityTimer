@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.activitytimer.utils.DurationString"/>
+        <import type="com.fortunately.timepass.utils.DurationString"/>
         <variable
             name="viewModel"
-            type="com.example.activitytimer.screens.taskExecution.CountDownTimerService.LocalBinder" />
+            type="com.fortunately.timepass.screens.taskExecution.CountDownTimerService.LocalBinder" />
     </data>
 
     <ScrollView

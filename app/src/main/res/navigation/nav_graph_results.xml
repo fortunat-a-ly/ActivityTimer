@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/DoneTasksList"
-        android:name="com.example.activitytimer.screens.doneTasks.DoneTaskList"
+        android:name="com.fortunately.timepass.screens.doneTasks.DoneTaskList"
         android:label="Your results">
 
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/SubtaskListFragment"
-        android:name="com.example.activitytimer.screens.listScreens.DoneSubtaskListFragment">
+        android:name="com.fortunately.timepass.screens.listScreens.DoneSubtaskListFragment">
 
         <argument
             android:name="taskId"

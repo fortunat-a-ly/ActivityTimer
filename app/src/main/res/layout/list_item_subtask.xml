@@ -5,8 +5,8 @@
     <data>
         <variable
             name="task"
-            type="com.example.activitytimer.data.subtask.Subtask" />
-        <import type="com.example.activitytimer.utils.DurationString"/>
+            type="com.fortunately.timepass.data.subtask.Subtask" />
+        <import type="com.fortunately.timepass.utils.DurationString"/>
     </data>
 
     <LinearLayout

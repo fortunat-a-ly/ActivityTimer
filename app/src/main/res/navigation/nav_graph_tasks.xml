@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/TaskListFragment"
-        android:name="com.example.activitytimer.screens.listScreens.TaskListFragment"
+        android:name="com.fortunately.timepass.screens.listScreens.TaskListFragment"
         android:label="TaskList1"
         tools:layout="@layout/fragment_task_list">
 
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/SubtaskListFragment"
-        android:name="com.example.activitytimer.screens.listScreens.SubtaskListFragment"
+        android:name="com.fortunately.timepass.screens.listScreens.SubtaskListFragment"
         android:label="">
 
         <argument
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/TaskExecutionFragment"
-        android:name="com.example.activitytimer.screens.taskExecution.TaskExecutionFragment"
+        android:name="com.fortunately.timepass.screens.taskExecution.TaskExecutionFragment"
         android:label="">
 
         <argument
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/CreateTaskFragment"
-        android:name="com.example.activitytimer.screens.createTask.CreateTaskFragment"
+        android:name="com.fortunately.timepass.screens.createTask.CreateTaskFragment"
         android:label="CreateTask">
 
         <argument
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/CreateSubtaskFragment"
-        android:name="com.example.activitytimer.screens.createTask.CreateSubtaskFragment"
+        android:name="com.fortunately.timepass.screens.createTask.CreateSubtaskFragment"
         android:label="CreateTask">
 
         <argument
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/TaskDoneFragment"
-        android:name="com.example.activitytimer.screens.taskDone.TaskDoneFragment"
+        android:name="com.fortunately.timepass.screens.taskDone.TaskDoneFragment"
         android:label="">
     </fragment>
 </navigation>
