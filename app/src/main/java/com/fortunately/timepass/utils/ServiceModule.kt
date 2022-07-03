@@ -36,7 +36,7 @@ object ServiceModule {
             Intent(app, com.fortunately.timepass.MainActivity::class.java).also {
                 it.action = Constants.ACTION_SHOW_TRACKING_FRAGMENT
             },
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
     }
 
