@@ -30,7 +30,11 @@ interface TaskDatabaseDao : DatabaseDao<Task> {
     @Query("SELECT * FROM task_table WHERE name != :taskKey ORDER BY name ASC")
     override fun getAllTasks(taskKey: Long): LiveData<List<Task>>
 
-    @Query("SELECT * FROM task_table WHERE is_constant = 1 ORDER BY name ASC")
+    @Query("SELECT *," +
+            " CASE WHEN time = 0" +
+            " THEN (SELECT SUM(time) FROM subtask_table WHERE subtask_table.task_id = task_table.id)" +
+            " ELSE time END AS `time`" +
+            " FROM task_table WHERE is_constant = 1 ORDER BY name ASC")
     fun get(): LiveData<List<Task>>
 
     @Query("SELECT * FROM done_task_table ORDER BY date DESC")

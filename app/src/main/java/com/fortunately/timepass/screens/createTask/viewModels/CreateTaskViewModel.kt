@@ -52,9 +52,9 @@ class CreateTaskViewModel @Inject constructor(
 
     fun saveToDatabase() {
         uiScope.launch {
-            withContext(Dispatchers.IO){
-                sumTaskDuration()
-
+            withContext(Dispatchers.IO) {
+                if(subtasks.isNotEmpty())
+                    task.duration = 0L
                 val key = database.insert(task)
 
                 if(!task.isConstant) {
@@ -65,12 +65,6 @@ class CreateTaskViewModel @Inject constructor(
 
                 databaseSubtask.insert(subtasks)
             }
-        }
-    }
-
-    private fun sumTaskDuration() {
-        subtasks.forEach {
-            task.duration += it.duration
         }
     }
 
