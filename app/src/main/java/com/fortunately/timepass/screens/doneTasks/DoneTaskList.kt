@@ -97,7 +97,8 @@ class DoneTaskList : Fragment() {
                 Row(modifier = Modifier
                     .padding(all = 20.dp)) {
                     Text(task.task.name, Modifier.weight(1f))
-                    Text(task.task.duration.seconds.toString())
+                    if(task.task.duration > 0)
+                        Text(task.task.duration.seconds.toString())
                 }
             }
     }

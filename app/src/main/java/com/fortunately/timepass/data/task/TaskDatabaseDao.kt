@@ -21,7 +21,10 @@ interface TaskDatabaseDao : DatabaseDao<Task> {
     @Query("SELECT * FROM done_task_table")
     fun getDatedTasks(): LiveData<List<DatedTask>>
 
-    @Query("SELECT * from task_table WHERE id = :key")
+    @Query("SELECT *," +
+            " CASE WHEN time = 0" +
+            " THEN (SELECT SUM(time * sets_count) FROM subtask_table WHERE subtask_table.task_id = task_table.id)" +
+            " ELSE time END AS `time` from task_table WHERE id = :key")
     fun get(key: Long): Task?
 
     @Query("SELECT * from task_table WHERE id = :key")
@@ -32,7 +35,7 @@ interface TaskDatabaseDao : DatabaseDao<Task> {
 
     @Query("SELECT *," +
             " CASE WHEN time = 0" +
-            " THEN (SELECT SUM(time) FROM subtask_table WHERE subtask_table.task_id = task_table.id)" +
+            " THEN (SELECT SUM(time * sets_count) FROM subtask_table WHERE subtask_table.task_id = task_table.id)" +
             " ELSE time END AS `time`" +
             " FROM task_table WHERE is_constant = 1 ORDER BY name ASC")
     fun get(): LiveData<List<Task>>
