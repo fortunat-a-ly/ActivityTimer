@@ -52,7 +52,7 @@ object ServiceModule {
             .setOngoing(true)
             .setContentTitle("Track Time")
             .setContentText("00:00:00")
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.mipmap.ic_notification_foreground)
             .setContentIntent(pendingIntent)
     }
 
@@ -68,7 +68,7 @@ object ServiceModule {
             .setOngoing(true)
             .setContentTitle("Task")
             .setContentText("In progress")
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.mipmap.ic_notification_foreground)
             .setContentIntent(pendingIntent)
     }
 }
