@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import com.fortunately.timepass.data.doneTasks.DoneTask
 import com.fortunately.timepass.data.subtask.Subtask
 import com.fortunately.timepass.data.subtask.SubtaskDatabaseDao
 import com.fortunately.timepass.data.task.TaskDatabaseDao
@@ -24,6 +26,7 @@ import com.fortunately.timepass.utils.TaskTimerNotificationBuilder
 import com.fortunately.timepass.utils.timer.CountDownSecondsTimerWithState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -84,7 +87,7 @@ class CountDownTimerService : LifecycleService() {
         val channel = NotificationChannel(
             Constants.NOTIFICATION_TRACKING_CHANNEL_ID,
             Constants.NOTIFICATION_TRACKING_CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_LOW
         )
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
@@ -141,6 +144,14 @@ class CountDownTimerService : LifecycleService() {
         fun finishTask() {
             stopForeground(true)
             stopSelf()
+        }
+
+        fun saveTaskIntoHistory() {
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO){
+                    taskDao.insertDatedTask(DoneTask(date = Calendar.getInstance().timeInMillis, taskId = taskId))
+                }
+            }
         }
 
         private suspend fun loadUsers() {
@@ -234,7 +245,11 @@ class CountDownTimerService : LifecycleService() {
             }
             else {
                 if(state == startState) _skippedAllTasks.value = true
-                else _allTasksDone.value = true
+                else {
+                    saveTaskIntoHistory()
+                    _allTasksDone.value = true
+                }
+
                 finishTask()
             }
         }

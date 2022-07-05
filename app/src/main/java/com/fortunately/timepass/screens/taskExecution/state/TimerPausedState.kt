@@ -17,6 +17,8 @@ class TimerPausedState(newStateOwner: CountDownTimerService.LocalBinder) : Timer
     }
 
     override fun finish() {
+        stateOwner.saveTaskIntoHistory()
+        stateOwner.finishTask()
         stateOwner._allTasksDone.value = true
     }
 }

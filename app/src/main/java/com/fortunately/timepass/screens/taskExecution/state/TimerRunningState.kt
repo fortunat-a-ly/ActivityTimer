@@ -20,6 +20,7 @@ class TimerRunningState(stateOwner: CountDownTimerService.LocalBinder) : TimerSt
     override fun finish() {
         stateOwner.timer?.pause()
         stateOwner._state.value = stateOwner.pausedState
+        stateOwner.saveTaskIntoHistory()
         stateOwner.finishTask()
         stateOwner._allTasksDone.value = true
     }
