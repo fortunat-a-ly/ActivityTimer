@@ -63,9 +63,19 @@
                 android:text="@{DurationString.INSTANCE.fromSeconds(task.duration)}"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/txv_category"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imv_triangle"
                 app:layout_constraintTop_toTopOf="@+id/txv_name"
                 tools:text="0m2s" />
+
+            <ImageView
+                android:id="@+id/imv_triangle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_execute_task"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
